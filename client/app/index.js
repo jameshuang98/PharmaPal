@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
+import { useState } from 'react';
+import { Stack, useRouter } from 'expo-router';
 
 const Home = () => {
+    const router = useRouter()
+
     return (
-        <View>
-            <Text>Home</Text>
-        </View>
+        <SafeAreaView style={{ flex: 1 }}>
+            <Stack.Screen
+                options={{ headerShadowVisible: false }}
+            />
+        </SafeAreaView>
     )
 }
 

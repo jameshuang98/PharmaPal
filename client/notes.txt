@@ -1,0 +1,37 @@
+What is the core objective or problem your app aims to solve?
+- Help users keep track of their medication and/or prescription intake
+
+Who is the target audience for your app?
+- Anyone
+
+What are the key features and functionalities your app will have?
+- Home screen with today's medication and if it's taken or not
+- History of medication taken
+- Able to add a prescriptoin
+    - Details include: dosage, name, date range?, frequency, side effects or risk details
+- Able to pause a prescription
+- Able to stop taking a prescription at all
+- Able to delete prescription data
+- Calendar view of prescription
+- 
+
+
+Which platforms will your app be available on (e.g., iOS, Android, web)?
+- iOS
+
+How do you plan to monetize your app (e.g., paid app, in-app purchases, ads)?
+- N/A 
+
+What will be the user flow and how will users interact with your app?
+- Three tabs: Home, List of Prescriptions, Calendar View
+
+Are there any similar apps in the market, and how will your app differentiate itself?
+- Pillbox
+
+What are the technical requirements for developing your app (programming languages, frameworks, databases)?
+
+Do you need to integrate any third-party services or APIs into your app?
+
+How will you design the visual and user experience aspects of your app?
+
+What is your estimated development timeline and budget for the side project?
