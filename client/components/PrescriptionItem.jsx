@@ -14,13 +14,12 @@ const PrescriptionItem = (props) => {
         <Text>{dose} mg</Text>
       </View>
       <View style={styles.checkBoxContainer}>
-        <Text>Checkbox</Text>
+        <CheckBox
+          disabled={false}
+          value={toggleCheckBox}
+          onValueChange={(newValue) => setToggleCheckBox(newValue)}
+        />
       </View>
-      {/* <CheckBox
-        disabled={false}
-        value={toggleCheckBox}
-        onValueChange={(newValue) => setToggleCheckBox(newValue)}
-      /> */}
     </View>
   )
 };
