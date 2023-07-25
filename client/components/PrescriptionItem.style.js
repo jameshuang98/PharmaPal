@@ -4,22 +4,24 @@ import { COLORS, SIZES, SHADOWS } from "../constants";
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
+    width: "85%",
     marginTop: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     backgroundColor: COLORS.lightWhite,
-    padding: 10,
-    paddingTop: 20,
-    paddingBottom: 20
+    padding: 15,
+    alignSelf: "center",
+    borderRadius: 10,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexGrow: 1
   },
-  userName: {
-    fontSize: SIZES.large,
-    color: COLORS.secondary,
+  checkBoxContainer: {
+    alignSelf:"center"
   },
   title: {
-    fontSize: SIZES.xLarge,
+    fontSize: SIZES.medium,
     color: COLORS.primary,
-    marginTop: 2,
   },
 });
 

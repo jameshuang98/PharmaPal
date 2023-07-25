@@ -1,14 +1,28 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import styles from './PrescriptionItem.style'
+import { View, Text } from 'react-native';
+import { useState } from 'react';
+import styles from './prescriptionItem.style';
+import CheckBox from '@react-native-community/checkbox';
 
 const PrescriptionItem = (props) => {
-  const { title, dose, id } = props;
+  const { title, dose } = props;
+  const [toggleCheckBox, setToggleCheckBox] = useState(false)
+
   return (
     <View style={styles.container}>
-      <Text>Zoloft</Text>
+      <View>
+        <Text style={styles.title}>{title}</Text>
+        <Text>{dose} mg</Text>
+      </View>
+      <View style={styles.checkBoxContainer}>
+        <Text>Checkbox</Text>
+      </View>
+      {/* <CheckBox
+        disabled={false}
+        value={toggleCheckBox}
+        onValueChange={(newValue) => setToggleCheckBox(newValue)}
+      /> */}
     </View>
   )
-}
+};
 
 export default PrescriptionItem
