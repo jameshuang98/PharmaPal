@@ -1,26 +1,44 @@
 import { View, Text, SafeAreaView } from 'react-native'
 import React from 'react'
 import styles from "./home.style";
-import PrescriptionItem from '../../../components/PrescriptionItem';
+import PrescriptionTimeSlot from '../../../components/PrescriptionTimeSlot';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
 
 const Home = () => {
   const { state } = usePrescriptionData();
-  prescriptionData = state.prescriptionData;
-  console.log(state);
+  // console.log(state);
+  let timeslotData = {};
+  for (const p of state.prescriptionData) {
+    let json = JSON.parse(p.json);
+    for (const t of Object.values(json)) {
+      if (!timeslotData[t]) {
+        timeslotData[t] = []
+      }
+      timeslotData[t].push({
+        title: p.title,
+        dose: p.dose
+      })
+    }
+  }
+  console.log("timeslotData", timeslotData)
+  const timeslots = Object.keys(timeslotData);
+
+  const parsedTimeslots = timeslots.map((time, idx) =>
+    <PrescriptionTimeSlot
+      key={idx}
+      time={time}
+      doseList={timeslotData[time]}
+    />
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View>
         <View style={styles.container}>
           <Text style={styles.userName}>Hello James</Text>
           <Text style={styles.welcomeMessage}>Here are your prescriptions for today:</Text>
-          <Text>{prescriptionData[0].id}</Text>
         </View>
-        <PrescriptionItem 
-          title={prescriptionData[0].title}
-          dose={prescriptionData[0].dose}
-          id={prescriptionData[0].id}
-        />
+        {parsedTimeslots}
       </View>
     </SafeAreaView>
   )
