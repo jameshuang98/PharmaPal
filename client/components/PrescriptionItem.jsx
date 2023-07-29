@@ -1,12 +1,11 @@
 import { View, Text } from 'react-native';
 import { useState } from 'react';
 import styles from './prescriptionItem.style';
-import CheckBox from '@react-native-community/checkbox';
+import Checkbox from 'expo-checkbox';
 
 const PrescriptionItem = (props) => {
   const { title, dose } = props;
-  const [toggleCheckBox, setToggleCheckBox] = useState(false)
-
+  const [isChecked, setChecked] = useState(false);
   return (
     <View style={styles.container}>
       <View>
@@ -14,10 +13,11 @@ const PrescriptionItem = (props) => {
         <Text>{dose} mg</Text>
       </View>
       <View style={styles.checkBoxContainer}>
-        <CheckBox
-          disabled={false}
-          value={toggleCheckBox}
-          onValueChange={(newValue) => setToggleCheckBox(newValue)}
+        <Checkbox
+          style={styles.checkbox}
+          value={isChecked}
+          onValueChange={setChecked}
+          color={isChecked ? '#4630EB' : undefined}
         />
       </View>
     </View>

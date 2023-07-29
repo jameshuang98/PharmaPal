@@ -23,6 +23,9 @@ const styles = StyleSheet.create({
     fontSize: SIZES.medium,
     color: COLORS.primary,
   },
+  checkbox: {
+    margin: 8
+  }
 });
 
 export default styles;
