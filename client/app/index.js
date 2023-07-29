@@ -1,5 +1,4 @@
 import { View, Text, ScrollView, SafeAreaView } from 'react-native';
-import { useEffect } from 'react';
 import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -12,17 +11,6 @@ import { Ionicons } from '@expo/vector-icons';
 const Tab = createBottomTabNavigator();
 
 function App() {
-    useEffect(() => {
-        const intervalId = BackgroundFetch.registerTaskAsync(CREATE_RECORDS, {
-            minimumInterval: 24 * 60, // In minutes, every 24 hours (midnight).
-            stopOnTerminate: false,   // Continue running task even if the app is terminated.
-            startOnBoot: true,        // Start task when the device reboots.
-        });
-        return () => {
-            // Unregister the task when the component unmounts (optional).
-            BackgroundFetch.unregisterTaskAsync(intervalId);
-        };
-    }, []);
     return (
         <NavigationContainer independent={true} screenOptions={{ headerTitle: "" }}>
             <Tab.Navigator screenOptions={{ headerShown: false }}>
