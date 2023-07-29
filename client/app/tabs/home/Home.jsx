@@ -10,13 +10,16 @@ const Home = () => {
   let timeslotData = {};
   for (const p of state.prescriptionData) {
     let json = JSON.parse(p.json);
-    for (const t of Object.values(json)) {
+    for (const doseId in json) {
+      const t = json[doseId]
       if (!timeslotData[t]) {
         timeslotData[t] = []
       }
       timeslotData[t].push({
         title: p.title,
-        dose: p.dose
+        dose: p.dose,
+        doseId: doseId,
+        prescriptionId: p.id
       })
     }
   }

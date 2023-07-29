@@ -11,7 +11,7 @@ const PrescriptionTimeSlot = (props) => {
         hour: 'numeric',
         minute: 'numeric',
         hour12: true,
-      });
+    });
 
     doseList.sort((a, b) => a.title.localeCompare(b.title));
     const parsedDoses = doseList.map((dose, idx) =>
@@ -19,6 +19,8 @@ const PrescriptionTimeSlot = (props) => {
             key={idx}
             title={dose.title}
             dose={dose.dose}
+            doseId={dose.doseId}
+            prescriptionId={dose.prescriptionId}
         />
     );
 
@@ -27,7 +29,7 @@ const PrescriptionTimeSlot = (props) => {
             <View style={styles.container}>
                 <Text style={styles.timeslot}>{formattedTime}</Text>
             </View>
-                {parsedDoses}
+            {parsedDoses}
         </View>
     )
 };
