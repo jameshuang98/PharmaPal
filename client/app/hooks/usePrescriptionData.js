@@ -29,7 +29,8 @@ const firebaseConfig = {
 export default function usePrescriptionData() {
     // initialize state
     const [state, setState] = useState({
-        prescriptionData: []
+        prescriptionData: [],
+        recordData: []
     });
 
     // initialize firebase app
@@ -39,14 +40,27 @@ export default function usePrescriptionData() {
     const db = getFirestore();
     const auth = getAuth();
 
-    // collection ref
-    const colRef = collection(db, 'prescription');
+    // collection refs
+    const prescriptionRef = collection(db, 'prescription');
+    const recordRef = collection(db, 'record');
 
 
-    // grouping queries together
+
+    // state.prescriptionData
+    // [{"id": "123123sldflkj", "user_id":"1", "title":"Zoloft", "created_at":"123123123", "dailyFrequency":"2", "frequency":"1", "json":"{"1": "1690167371", "2": "1690167372" }", "status":"active"}]
+
+    // timeslot object
+    // {{"1690167371": [{"title": "zoloft", "dose":"50"}, {"title": "aderall", "dose":"20"}]}, {"1690167372": [{"title": "zoloft", "dose":"50"}, {"title": "aderall", "dose":"20"}]}}
+
+    // single timeslot_list (group by time to take medicine (from json))
+    // [{"title": "zoloft", "dose":"50"}, {"title": "aderall", "dose":"20"}]
+
+
+
+    // getting data and storing it in state
     useEffect(() => {
         let prescriptions = []
-        getDocs(colRef)
+        getDocs(prescriptionRef)
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
                     prescriptions.push({ ...doc.data(), id: doc.id })
@@ -58,10 +72,45 @@ export default function usePrescriptionData() {
             })
             .catch(err => {
                 console.log(err.message)
-            })
-
-
+            });
     }, []);
 
-    return { state };
+
+    // task to create records in record collection
+    const createRecord = (record) => {
+        addDoc(recordRef,
+            {
+                prescription_id: record.prescription_id,
+                dose_id: record.dose_id,
+                created_at: record.created_at,
+                taken: record.taken,
+                taken_at: record.taken_at
+            })
+            .then(() => {
+                console.log(`Record Created: ${record.prescription_id} ${record.dose_id}`);
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
+
+    // update an existing record
+    const updateRecord = (prescription_id, dose_id) => {
+        const query = query(recordRef, where("prescription_id", "==", prescription_id), where("dose_id", "==", dose_id));
+        console.log("updateRecord query", query)
+        
+        // if (!querySnapshot.empty) {
+        //     const docRef = querySnapshot.docs[0].ref;
+        //     // docRef now refers to the document with the specified email field value
+        // }
+        // const docRef =
+        //     updateDoc(docRef, {
+        //         title: 'updated title'
+        //     })
+        //         .then(() => {
+        //             updateForm.reset();
+        //         })
+    }
+
+    return { state, createRecord, updateRecord };
 };
