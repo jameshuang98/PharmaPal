@@ -4,7 +4,7 @@ import {
     getFirestore, collection, getDocs, onSnapshot,
     addDoc, deleteDoc, doc,
     query, where,
-    orderBy, serverTimestamp,
+    orderBy, serverTimestamp, Timestamp,
     getDoc, updateDoc
 } from 'firebase/firestore'
 import {
@@ -47,10 +47,10 @@ export default function usePrescriptionData() {
 
 
     // state.prescriptionData
-    // [{"id": "123123sldflkj", "user_id":"1", "title":"Zoloft", "created_at":"123123123", "dailyFrequency":"2", "frequency":"1", "json":"{"1": "1690167371", "2": "1690167372" }", "status":"active"}]
+    // [{"id": "123123sldflkj", "userId":"1", "title":"Zoloft", "createdAt":"123123123", "dailyFrequency":"2", "frequency":"1", "json":"{"1": "1690167371", "2": "1690167372" }", "status":"active"}]
 
     // timeslot object
-    // {{"1690167371": [{"title": "zoloft", "dose":"50", "prescription_id": "123123sldflkj"}, {"title": "aderall", "dose":"20", "prescription_id": "12312322sldflkj"}]}, {"1690167372": [{"title": "zoloft", "dose":"50", "prescription_id": "123123sldflkj"}, {"title": "aderall", "dose":"20", "prescription_id": "123123s22ldflkj"}]}}
+    // {{"1690167371": [{"title": "zoloft", "dose":"50", "prescriptionId": "123123sldflkj"}, {"title": "aderall", "dose":"20", "prescriptionId": "12312322sldflkj"}]}, {"1690167372": [{"title": "zoloft", "dose":"50", "prescriptionId": "123123sldflkj"}, {"title": "aderall", "dose":"20", "prescriptionId": "123123s22ldflkj"}]}}
 
     // single timeslot_list (group by time to take medicine (from json))
     // [{"title": "zoloft", "dose":"50"}, {"title": "aderall", "dose":"20"}]
@@ -78,19 +78,20 @@ export default function usePrescriptionData() {
     // task to get record in record collection
     const getRecord = (prescriptionId, doseId) => {
         let records = []
-        const q = query(recordRef, where("prescription_id", "==", prescriptionId), where("dose_id", "==", parseInt(doseId)));
+        const q = query(recordRef, where("prescriptionId", "==", prescriptionId), where("doseId", "==", parseInt(doseId)));
 
         return getDocs(q)
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
-                    records.push(doc.data())
+                    records.push({ ...doc.data(), id: doc.id })
                 })
 
                 if (records.length > 1) {
-                    throw new Error(`More than one record found with prescription_id: ${prescription_id} dose_id: ${doseId}!`);
+                    throw new Error(`Error! More than one record found with prescriptionId: ${prescriptionId} and doseId: ${doseId}`);
                 } else if (records.length == 0) {
                     return null
                 }
+                console.log('records[0]', records[0])
                 return records[0]
             })
             .catch(err => {
@@ -101,25 +102,36 @@ export default function usePrescriptionData() {
 
     // task to create records in record collection
     const createRecord = (record) => {
-        addDoc(recordRef,
-            {
-                prescription_id: record.prescription_id,
-                dose_id: record.dose_id,
-                created_at: record.created_at,
-                taken: record.taken,
-                taken_at: record.taken_at
-            })
-            .then(() => {
-                console.log(`Record Created: ${record.prescription_id} ${record.dose_id}`);
+        const recordToCreate = {
+            prescriptionId: record.prescriptionId,
+            doseId: parseInt(record.doseId),
+            createdAt: record.createdAt,
+            taken: record.taken,
+            takenAt: record.takenAt
+        }
+        return addDoc(recordRef, recordToCreate)
+            .then((docRef) => {
+                const res = {
+                    ...recordToCreate,
+                    id: docRef.id
+                }
+                return res;
             })
             .catch((err) => {
                 console.log(err.message);
             });
+
     };
 
+    // takes 2 arguments: document reference and object
+    // it only updates document based on object, it will leave other properties alone if not in the update object
+    // updateDoc(docRef, {
+    //     title: 'updated title'
+    // })
     // update an existing record
-    const updateRecord = (prescription_id, dose_id) => {
-        const q = query(recordRef, where("prescription_id", "==", prescription_id), where("dose_id", "==", dose_id));
+    const updateRecord = (recordId, taken) => {
+        const docRef = doc(db, 'record', recordId);
+        const q = query(recordRef, where("prescriptionId", "==", prescriptionId), where("doseId", "==", doseId));
         console.log("updateRecord query", q)
 
         // if (!querySnapshot.empty) {
