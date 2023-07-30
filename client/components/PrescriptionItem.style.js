@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: SIZES.medium,
     color: COLORS.primary,
+    fontWeight: "bold"
   },
   checkbox: {
     margin: 8

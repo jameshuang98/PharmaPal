@@ -135,9 +135,6 @@ export default function usePrescriptionData() {
             taken: taken,
             takenAt: taken ? serverTimestamp() : takenAt
         })
-        .then((res) => {
-            console.log('updateRecord res', res)
-        })
     }
 
     return { state, getRecord, createRecord, updateRecord };
