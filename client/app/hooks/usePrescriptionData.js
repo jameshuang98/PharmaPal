@@ -129,22 +129,15 @@ export default function usePrescriptionData() {
     //     title: 'updated title'
     // })
     // update an existing record
-    const updateRecord = (recordId, taken) => {
-        const docRef = doc(db, 'record', recordId);
-        const q = query(recordRef, where("prescriptionId", "==", prescriptionId), where("doseId", "==", doseId));
-        console.log("updateRecord query", q)
-
-        // if (!querySnapshot.empty) {
-        //     const docRef = querySnapshot.docs[0].ref;
-        //     // docRef now refers to the document with the specified email field value
-        // }
-        // const docRef =
-        //     updateDoc(docRef, {
-        //         title: 'updated title'
-        //     })
-        //         .then(() => {
-        //             updateForm.reset();
-        //         })
+    const updateRecord = (id, taken, takenAt) => {
+        const docRef = doc(db, 'record', id);
+        updateDoc(docRef, {
+            taken: taken,
+            takenAt: taken ? serverTimestamp() : takenAt
+        })
+        .then((res) => {
+            console.log('updateRecord res', res)
+        })
     }
 
     return { state, getRecord, createRecord, updateRecord };

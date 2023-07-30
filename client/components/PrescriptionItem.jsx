@@ -4,20 +4,48 @@ import styles from './prescriptionItem.style';
 import Checkbox from 'expo-checkbox';
 import usePrescriptionData from '../app/hooks/usePrescriptionData';
 import { getTodayTimestamp } from '../app/helpers/helpers';
+import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 const PrescriptionItem = (props) => {
   const { title, dose, doseId, prescriptionId } = props;
-  const { getRecord } = usePrescriptionData();
-  const [record, setRecord] = useState({taken: false});
+  const { getRecord, createRecord, updateRecord } = usePrescriptionData();
+  const [record, setRecord] = useState({ taken: false });
+  // console.log('doseId', doseId)
+  // console.log('prescriptionId', prescriptionId)
 
   const setChecked = () => {
-    setRecord({...record, taken:!record.taken})
-  }
+    const r = {
+      prescriptionId,
+      doseId,
+      createdAt: Timestamp.fromDate(getTodayTimestamp()),
+      taken: !record.taken,
+      takenAt: serverTimestamp()
+    }
+    if (!record.id) {
+      createRecord(r)
+        .then((res) => {
+          console.log('createRecord res', res)
+          if (res) {
+            setRecord(res);
+          }
+        })
+        .catch(err => {
+          console.log(err.message)
+        })
+    } else {
+      updateRecord(record.id, !record.taken, record.takenAt);
+      setRecord({
+        ...record,
+        taken: !record.taken,
+        takenAt: !record.taken ? serverTimestamp() : record.takenAt
+      });
+    }
+  };
 
   useEffect(() => {
     getRecord(prescriptionId, doseId)
       .then((res) => {
-        console.log('res', res)
+        console.log('useEffect res', res)
         if (res) {
           setRecord(res);
         }
@@ -26,8 +54,6 @@ const PrescriptionItem = (props) => {
         console.log(err.message)
       })
   }, []);
-
-  const timestamp = getTodayTimestamp();
 
 
   return (
