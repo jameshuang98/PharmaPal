@@ -1,7 +1,7 @@
 import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
 import styles from "./home.style";
-import PrescriptionTimeSlot from '../../../components/PrescriptionTimeSlot';
+import PrescriptionTimeSlot from '../../../components/home/PrescriptionTimeSlot';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
 
 const Home = () => {

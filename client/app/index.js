@@ -3,14 +3,17 @@ import { Stack } from 'expo-router';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from './tabs/home/Home';
-import List from './tabs/list/List';
+import PrescriptionList from './tabs/list/PrescriptionList';
 import Calendar from './tabs/calendar/Calendar';
+import usePrescriptionData from './hooks/usePrescriptionData';
 import { Ionicons } from '@expo/vector-icons';
-
 
 const Tab = createBottomTabNavigator();
 
 function App() {
+
+    const { state } = usePrescriptionData();
+
     return (
         <NavigationContainer independent={true} screenOptions={{ headerTitle: "" }}>
             <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -34,7 +37,8 @@ function App() {
 
                 <Tab.Screen
                     name="Prescription List"
-                    component={List}
+                    component={PrescriptionList}
+                    initialParams={state}
                     options={{
                         tabBarIcon: ({ focused, color, size }) => (
                             <Ionicons

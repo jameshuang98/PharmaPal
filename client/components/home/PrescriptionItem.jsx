@@ -2,8 +2,8 @@ import { View, Text } from 'react-native';
 import { useState, useEffect } from 'react';
 import styles from './prescriptionItem.style';
 import Checkbox from 'expo-checkbox';
-import usePrescriptionData from '../app/hooks/usePrescriptionData';
-import { getTodayTimestamp } from '../app/helpers/helpers';
+import usePrescriptionData from '../../app/hooks/usePrescriptionData';
+import { getTodayTimestamp } from '../../app/helpers/helpers';
 import { Timestamp, serverTimestamp } from 'firebase/firestore';
 
 const PrescriptionItem = (props) => {
