@@ -5,14 +5,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import Home from './tabs/home/Home';
 import PrescriptionList from './tabs/list/PrescriptionList';
 import Calendar from './tabs/calendar/Calendar';
-import usePrescriptionData from './hooks/usePrescriptionData';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
 function App() {
 
-    const { state } = usePrescriptionData();
 
     return (
         <NavigationContainer independent={true} screenOptions={{ headerTitle: "" }}>
@@ -20,7 +18,6 @@ function App() {
                 <Tab.Screen
                     name="Home"
                     component={Home}
-
                     options={{
                         headerTitle: "",
                         headerShown: false,
@@ -38,7 +35,6 @@ function App() {
                 <Tab.Screen
                     name="Prescription List"
                     component={PrescriptionList}
-                    initialParams={state}
                     options={{
                         tabBarIcon: ({ focused, color, size }) => (
                             <Ionicons
