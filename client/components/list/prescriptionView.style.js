@@ -8,9 +8,17 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginBottom: 12,
     backgroundColor: COLORS.white,
-    padding: 12,
+    padding: 14,
     alignSelf: "center",
     borderRadius: 12,
+    borderWidth: 2,
+    borderColor: COLORS.white,
+  },
+  selected: {
+    borderStyle: "solid",
+    borderColor: COLORS.peach,
+  },
+  content: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
@@ -34,20 +42,16 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginRight: 5,
     marginTop: 5,
+  },
+  active: {
     backgroundColor: '#2ecc71', // Green color
+  },
+  paused: {
+    backgroundColor: '#fff700', // Green color
   },
   button: {
     width: "100%",
     height: "100%",
-    backgroundColor: 'blue',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 4, // For Android shadow
   }
 });
 
