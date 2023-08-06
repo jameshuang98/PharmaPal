@@ -1,13 +1,17 @@
 const COLORS = {
-    primary: "#312651",
-    secondary: "#444262",
-    tertiary: "#FF7754",
-
     gray: "#83829A",
     gray2: "#C1C0C8",
 
-    white: "#F3F4F8",
-    lightWhite: "#FAFAFC",
+    white: "#FFFFFF",
+    lightWhite: "#f2f2f2",
+
+    primary: "#0c2431",
+    secondary: "#194a50",
+    tertiary: "#d37556",
+    peach: "#d8a28c",
+    pastel: "#f0eae3"
+
+
 };
 
 const SIZES = {

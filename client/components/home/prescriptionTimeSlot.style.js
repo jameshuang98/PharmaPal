@@ -4,17 +4,20 @@ import { COLORS, SIZES, SHADOWS } from "../../constants";
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: COLORS.tertiary,
-    padding: 10,
+    marginBottom: 22,
   },
-  timeslot: {
-    fontSize: SIZES.large,
+  slot: {
+    width: "100%",
+    marginBottom: 5,
+    backgroundColor: COLORS.secondary,
+    padding: 4,
+  },
+  time: {
+    fontSize: SIZES.medium + 2,
     fontWeight: "bold",
     color: COLORS.lightWhite,
     marginTop: 2,
+    fontFamily: "Arial"
   },
 });
 

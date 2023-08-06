@@ -3,18 +3,23 @@ import { StyleSheet } from "react-native";
 import { COLORS, FONT, SIZES } from "../../../constants";
 
 const styles = StyleSheet.create({
-  container: {
+  home: {
+    flex: 1,
+    backgroundColor: COLORS.lightWhite
+  },
+  titleContainer: {
     width: "100%",
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 15
   },
   userName: {
     fontSize: SIZES.large,
     color: COLORS.secondary,
   },
-  welcomeMessage: {
-    fontSize: SIZES.xLarge,
+  tabTitle: {
+    fontSize: SIZES.large,
     color: COLORS.primary,
+    fontWeight: "bold",
     marginTop: 2,
   },
   tabsContainer: {

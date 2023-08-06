@@ -25,9 +25,9 @@ const PrescriptionTimeSlot = (props) => {
     );
 
     return (
-        <View>
-            <View style={styles.container}>
-                <Text style={styles.timeslot}>{formattedTime}</Text>
+        <View style={styles.container}>
+            <View style={styles.slot}>
+                <Text style={styles.time}>{formattedTime}</Text>
             </View>
             {parsedDoses}
         </View>

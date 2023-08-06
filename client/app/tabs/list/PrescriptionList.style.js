@@ -3,17 +3,16 @@ import { StyleSheet } from "react-native";
 import { FONT, SIZES, COLORS } from "../../../constants";
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: SIZES.xLarge,
+  titleContainer: {
+    width: "100%",
+    marginTop: 10,
+    marginBottom: 15
   },
-  header: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  headerTitle: {
+  tabTitle: {
     fontSize: SIZES.large,
     color: COLORS.primary,
+    fontWeight: "bold",
+    marginTop: 2,
   },
   headerBtn: {
     fontSize: SIZES.medium,

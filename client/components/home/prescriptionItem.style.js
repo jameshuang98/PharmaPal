@@ -5,9 +5,9 @@ import { COLORS, SIZES, SHADOWS } from "../../constants";
 const styles = StyleSheet.create({
   container: {
     width: "85%",
-    marginTop: 10,
-    marginBottom: 10,
-    backgroundColor: COLORS.lightWhite,
+    marginTop: 5,
+    marginBottom: 2,
+    backgroundColor: COLORS.white,
     padding: 15,
     alignSelf: "center",
     borderRadius: 10,

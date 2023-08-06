@@ -35,12 +35,11 @@ const Home = () => {
   );
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.home}>
       <ScrollView showsVerticalScrollIndicator={true}>
         <View>
-          <View style={styles.container}>
-            <Text style={styles.userName}>Hello James</Text>
-            <Text style={styles.welcomeMessage}>Here are your prescriptions for today:</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.tabTitle}>Today's Prescriptions</Text>
           </View>
           {parsedTimeslots}
         </View>
