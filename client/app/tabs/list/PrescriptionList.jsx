@@ -3,6 +3,7 @@ import { useState } from 'react';
 import styles from './PrescriptionList.style';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
 import PrescriptionView from '../../../components/list/PrescriptionView';
+import { FAB } from '@rneui/themed';
 
 const PrescriptionList = () => {
   const { state } = usePrescriptionData();
@@ -31,6 +32,11 @@ const PrescriptionList = () => {
           {selected && <Text>{selected}</Text>}
         </ScrollView>
       </TouchableWithoutFeedback>
+      <FAB
+        icon={{ name: 'add', color: 'white' }}
+        size="small"
+        placement="right"
+      />
     </SafeAreaView>
   )
 };
