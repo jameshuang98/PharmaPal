@@ -6,7 +6,6 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@react-native-community/checkbox": "^0.5.16",
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.7",
     "expo": "^48.0.7",
