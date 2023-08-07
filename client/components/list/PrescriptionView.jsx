@@ -15,7 +15,7 @@ const PrescriptionView = (props) => {
     case status === "Active":
     default:
       break;
-  }
+  };
 
   return (
     <View style={StyleSheet.compose(styles.container, selected === id ? styles.selected : "")}>

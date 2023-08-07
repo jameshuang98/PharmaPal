@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, FlatList, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, ScrollView, TouchableWithoutFeedback, Modal, TextInput } from 'react-native';
 import { useState } from 'react';
 import styles from './PrescriptionList.style';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
@@ -7,8 +7,18 @@ import { FAB } from '@rneui/themed';
 
 const PrescriptionList = () => {
   const { state } = usePrescriptionData();
-  const [selected, setSelected] = useState(null)
-  console.log("prescriptionList state", state)
+  const [selected, setSelected] = useState(null);
+  const [prescriptionForm, setPrescriptionForm] = useState({
+    dailyFrequency: 1,
+    dose: 0,
+    frequency: 1,
+    json: "",
+    status: "",
+    title: "",
+    userId: 1
+  });
+  const [modalVisible, setModalVisible] = useState(false);
+  console.log("prescriptionList state", state);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -36,9 +46,31 @@ const PrescriptionList = () => {
         icon={{ name: 'add', color: 'white' }}
         size="small"
         placement="right"
+        style={styles.fab}
+        onPress={() => setModalVisible(true)}
       />
+      <Modal
+        animationType="none"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(false);
+        }}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalView}>
+            <TextInput
+              style={styles.textInput}
+              onChangeText={(title) => setPrescriptionForm({...prescriptionForm, title: title})}
+              value={prescriptionForm.title}
+              placeholder='Enter Prescription Title'
+            />
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   )
 };
+
 
 export default PrescriptionList;

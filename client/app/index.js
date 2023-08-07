@@ -19,9 +19,9 @@ function App() {
                     name="Home"
                     component={Home}
                     options={{
-                        headerTitle: "",
-                        headerShown: false,
-                        headerShadowVisible: false,
+                        // headerTitle: "",
+                        // headerShown: false,
+                        // headerShadowVisible: false,
                         tabBarIcon: ({ focused, color, size }) => (
                             <Ionicons
                                 name={focused ? 'ios-home' : 'ios-home-outline'}
