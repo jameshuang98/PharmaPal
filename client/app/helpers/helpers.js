@@ -20,17 +20,6 @@ export function isSameDay(timestamp1, timestamp2) {
     );
 }
 
-export const emptyPrescription = {
-    id: "",
-    dailyFrequency: 1,
-    dose: 0,
-    frequency: 1,
-    json: "",
-    status: "",
-    title: "",
-    userId: 1
-}
-
 //   // Example usage:
 //   const timestamp1 = 1690662060; // Represents 2023-07-28T00:01:00-07:00 (12:01 AM)
 //   const timestamp2 = 1690710005; // Represents 2023-07-28T22:20:05-07:00

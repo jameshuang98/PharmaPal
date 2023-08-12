@@ -3,7 +3,6 @@ import React from 'react';
 import styles from './prescriptionTimeSlot.style';
 import PrescriptionItem from './PrescriptionItem';
 
-
 const PrescriptionTimeSlot = (props) => {
     const { time, doseList } = props;
     const date = new Date(time * 1000);
