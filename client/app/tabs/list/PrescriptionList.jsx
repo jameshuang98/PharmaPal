@@ -1,6 +1,7 @@
-import { View, Text, SafeAreaView, FlatList, ScrollView, TouchableWithoutFeedback, Modal, Pressable } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, ScrollView, Button, TouchableWithoutFeedback, Modal, Pressable } from 'react-native';
 import { useState } from 'react';
 import { FAB } from 'react-native-paper';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
 import styles from './PrescriptionList.style';
 import PrescriptionView from '../../../components/list/PrescriptionView';
@@ -25,7 +26,31 @@ const PrescriptionList = () => {
     userId: 1
   });
   const [modalVisible, setModalVisible] = useState(false);
-  const [inputFocus, setInputFocus] = useState(null);
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
+
+
 
   const handleInputChange = (key, value) => {
     setPrescriptionForm(prevForm => ({
@@ -45,7 +70,7 @@ const PrescriptionList = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => setSelected(null)}>
-        <ScrollView showsVerticalScrollIndicator={true}>
+        <View>
           <View style={styles.titleContainer}>
             <Text style={styles.tabTitle}>All Prescriptions</Text>
           </View>
@@ -62,8 +87,21 @@ const PrescriptionList = () => {
             contentContainerStyle={{ columnGap: 16 }}
           />
           {selected && <Text>{selected}</Text>}
-        </ScrollView>
+        </View>
       </TouchableWithoutFeedback>
+      <Button onPress={showDatepicker} title="Show date picker!" />
+      <Button onPress={showTimepicker} title="Show time picker!" />
+      {/* <Text>selected: {date.toLocaleString()}</Text> */}
+      {show && (
+        <DateTimePicker
+          testID="dateTimePicker"
+          value={date}
+          mode={mode}
+          is24Hour={true}
+          onChange={onChange}
+        />
+      )}
+
       <FAB
         icon="plus"
         style={styles.fab}
@@ -118,6 +156,7 @@ const PrescriptionList = () => {
                 state={prescriptionForm}
                 setState={setPrescriptionForm}
               />
+
 
 
             </View>
