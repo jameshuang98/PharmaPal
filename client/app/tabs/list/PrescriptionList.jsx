@@ -1,12 +1,18 @@
-import { View, Text, SafeAreaView, FlatList, ScrollView, TouchableWithoutFeedback, Modal, TextInput } from 'react-native';
+import { View, Text, SafeAreaView, FlatList, ScrollView, TouchableWithoutFeedback, Modal, Pressable } from 'react-native';
 import { useState } from 'react';
-import styles from './PrescriptionList.style';
+import { FAB } from 'react-native-paper';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
+import styles from './PrescriptionList.style';
 import PrescriptionView from '../../../components/list/PrescriptionView';
-import { FAB } from '@rneui/themed';
+import TextBox from '../../../components/common/TextBox';
+import NumberBox from '../../../components/common/NumberBox';
+import DataPicker from '../../../components/common/DataPicker';
+import { statuses, daysOfWeek } from '../../../constants/models';
 
 const PrescriptionList = () => {
   const { state } = usePrescriptionData();
+  console.log("prescriptionList state", state);
+
   const [selected, setSelected] = useState(null);
   const [prescriptionForm, setPrescriptionForm] = useState({
     dailyFrequency: 1,
@@ -18,8 +24,22 @@ const PrescriptionList = () => {
     userId: 1
   });
   const [modalVisible, setModalVisible] = useState(false);
-  console.log("prescriptionList state", state);
+  const [inputFocus, setInputFocus] = useState(null);
 
+  const handleInputChange = (key, value) => {
+    setPrescriptionForm(prevForm => ({
+      ...prevForm,
+      [key]: value
+    }));
+  };
+
+  const handleNumberInputChange = (key, value) => {
+    setPrescriptionForm(prevForm => ({
+      ...prevForm,
+      [key]: value.replace(/[^0-9]/g, '') // replace any non-numeric input
+    }));
+  };
+  console.log("prescriptionForm", prescriptionForm)
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => setSelected(null)}>
@@ -43,12 +63,12 @@ const PrescriptionList = () => {
         </ScrollView>
       </TouchableWithoutFeedback>
       <FAB
-        icon={{ name: 'add', color: 'white' }}
-        size="small"
-        placement="right"
+        icon="plus"
         style={styles.fab}
+        accessibilityLabel="Add new prescription"
         onPress={() => setModalVisible(true)}
       />
+
       <Modal
         animationType="none"
         transparent={true}
@@ -58,14 +78,41 @@ const PrescriptionList = () => {
           setModalVisible(false);
         }}>
         <View style={styles.modalContainer}>
-          <View style={styles.modalView}>
-            <TextInput
-              style={styles.textInput}
-              onChangeText={(title) => setPrescriptionForm({...prescriptionForm, title: title})}
-              value={prescriptionForm.title}
-              placeholder='Enter Prescription Title'
-            />
-          </View>
+          <Pressable style={styles.outsideModal}
+            onPress={(event) => {
+              if (event.target == event.currentTarget) {
+                setModalVisible(false);
+              }
+            }} >
+            <View style={styles.modalView}>
+
+              <TextBox
+                property="title"
+                value={prescriptionForm.title}
+                label="Prescription Name:"
+                handleInputChange={handleInputChange}
+              />
+
+              <NumberBox
+                property="dose"
+                value={prescriptionForm.dose}
+                label="Dose amount:"
+                handleNumberInputChange={handleNumberInputChange}
+              />
+
+              <DataPicker
+                label="Status: "
+                values={statuses}
+              />
+
+              <DataPicker
+                label="Repeat: "
+                values={Object.keys(daysOfWeek)}
+              />
+
+
+            </View>
+          </Pressable>
         </View>
       </Modal>
     </SafeAreaView>
