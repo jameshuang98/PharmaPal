@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { COLORS } from '../../constants';
 
 const TextBox = (props) => {
     const { property, value, label, handleInputChange } = props;
@@ -22,6 +23,7 @@ const TextBox = (props) => {
                 style={[
                     styles.input,
                     isFocused && styles.inputFocused,
+                    value && styles.hasValue
                 ]}
                 value={value}
                 onChangeText={(value) => handleInputChange(property, value)}
@@ -44,7 +46,11 @@ const styles = StyleSheet.create({
     },
     inputFocused: {
         borderColor: 'black',
-        borderWidth: 1
+        borderWidth: 1,
+        backgroundColor: COLORS.white
+    },
+    hasValue: {
+        backgroundColor: COLORS.white
     },
     label: {
         fontSize: 16,

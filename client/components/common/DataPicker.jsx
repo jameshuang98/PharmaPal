@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { useState } from 'react';
+import { COLORS } from '../../constants';
 
 const DataPicker = (props) => {
     const { label, values } = props;
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         fontSize: 16,
         color: '#000',
-        backgroundColor: '#F0F0F0',
+        backgroundColor: COLORS.white,
         marginBottom: 10,
     },
     inputFocused: {

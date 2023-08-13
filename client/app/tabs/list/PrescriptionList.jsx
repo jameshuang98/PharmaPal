@@ -7,11 +7,12 @@ import PrescriptionView from '../../../components/list/PrescriptionView';
 import TextBox from '../../../components/common/TextBox';
 import NumberBox from '../../../components/common/NumberBox';
 import DataPicker from '../../../components/common/DataPicker';
+import NumberBoxButton from '../../../components/common/NumberBoxButton';
 import { statuses, daysOfWeek } from '../../../constants/models';
 
 const PrescriptionList = () => {
   const { state } = usePrescriptionData();
-  console.log("prescriptionList state", state);
+  // console.log("prescriptionList state", state);
 
   const [selected, setSelected] = useState(null);
   const [prescriptionForm, setPrescriptionForm] = useState({
@@ -39,7 +40,8 @@ const PrescriptionList = () => {
       [key]: value.replace(/[^0-9]/g, '') // replace any non-numeric input
     }));
   };
-  console.log("prescriptionForm", prescriptionForm)
+  // console.log("prescriptionForm", prescriptionForm)
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TouchableWithoutFeedback onPress={() => setSelected(null)}>
@@ -99,7 +101,7 @@ const PrescriptionList = () => {
                 label="Dose amount:"
                 handleNumberInputChange={handleNumberInputChange}
               />
-
+              {prescriptionForm.dose}
               <DataPicker
                 label="Status: "
                 values={statuses}
@@ -108,6 +110,13 @@ const PrescriptionList = () => {
               <DataPicker
                 label="Repeat: "
                 values={Object.keys(daysOfWeek)}
+              />
+
+              <NumberBoxButton
+                label="Daily Frequency: "
+                property="frequency"
+                state={prescriptionForm}
+                setState={setPrescriptionForm}
               />
 
 

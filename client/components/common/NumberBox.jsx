@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { COLORS } from '../../constants';
 
 const NumberBox = (props) => {
     const { property, value, label, handleNumberInputChange } = props;
@@ -22,6 +23,7 @@ const NumberBox = (props) => {
                 style={[
                     styles.input,
                     isFocused && styles.inputFocused,
+                    value != 0 && styles.hasValue
                 ]}
                 keyboardType = 'number-pad'
                 value={value}
@@ -44,7 +46,11 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     inputFocused: {
-        borderColor: 'black',
+        outlineWidth: 0,
+        backgroundColor: COLORS.white
+    },
+    hasValue: {
+        backgroundColor: COLORS.white
     },
     label: {
         fontSize: 16,

@@ -22,12 +22,13 @@ const styles = StyleSheet.create({
     marginTop: SIZES.medium,
   },
   fab: {
-    shadowOffset: { width: 1, height: 1 }, // For iOS shadow
-    shadowColor: 'rgba(0,0,0, .4)', // IOS
-    shadowOpacity: 1, // IOS
-    shadowRadius: 1, //IOS
-    backgroundColor: '#fff',
-    elevation: 6, // Android
+    backgroundColor: COLORS.white,
+    color: COLORS.primary,
+    position: 'absolute',
+    borderRadius: 30,
+    margin: 16,
+    right: 0,
+    bottom: 0
   },
   modalText: {
     marginBottom: 15,
@@ -44,7 +45,7 @@ const styles = StyleSheet.create({
     width: "90%",
     height: "80%",
     marginBottom: 30,
-    marginTop: 25,
+    marginTop: 45,
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
