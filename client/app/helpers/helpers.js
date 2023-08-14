@@ -1,3 +1,5 @@
+import { daysOfWeek } from "../../constants/models";
+
 // get the timestamp for 12:01AM for today
 export function getTodayTimestamp() {
     const currentDate = new Date();
@@ -27,6 +29,13 @@ export function isSameDay(timestamp1, timestamp2) {
 
 
 
-
-
-
+export function getSelectedDays(bitmask) {
+    const selectedDays = [];
+    for (const day in daysOfWeek) {
+      if (bitmask & daysOfWeek[day]) {
+        selectedDays.push(day);
+      }
+    }
+    return selectedDays;
+  }
+  
