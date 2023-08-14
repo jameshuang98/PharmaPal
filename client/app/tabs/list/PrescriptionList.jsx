@@ -1,7 +1,6 @@
 import { View, Text, SafeAreaView, FlatList, ScrollView, Button, TouchableWithoutFeedback, Modal, Pressable } from 'react-native';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { FAB } from 'react-native-paper';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
 import styles from './PrescriptionList.style';
 import PrescriptionView from '../../../components/list/PrescriptionView';
@@ -9,7 +8,9 @@ import TextBox from '../../../components/common/TextBox';
 import NumberBox from '../../../components/common/NumberBox';
 import DataPicker from '../../../components/common/DataPicker';
 import NumberBoxButton from '../../../components/common/NumberBoxButton';
+import TimePicker from '../../../components/common/TimePicker';
 import { statuses, daysOfWeek } from '../../../constants/models';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const PrescriptionList = () => {
   const { state } = usePrescriptionData();
@@ -20,37 +21,14 @@ const PrescriptionList = () => {
     dailyFrequency: 1,
     dose: 0,
     frequency: 1,
+    recurringDays: "",
+    bitmaskDays: 0,
     json: "",
     status: "",
     title: "",
     userId: 1
   });
   const [modalVisible, setModalVisible] = useState(false);
-  const [date, setDate] = useState(new Date(1598051730000));
-  const [mode, setMode] = useState('date');
-  const [show, setShow] = useState(false);
-
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
-    setDate(currentDate);
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
-
-
-
 
   const handleInputChange = (key, value) => {
     setPrescriptionForm(prevForm => ({
@@ -62,14 +40,43 @@ const PrescriptionList = () => {
   const handleNumberInputChange = (key, value) => {
     setPrescriptionForm(prevForm => ({
       ...prevForm,
-      [key]: value.replace(/[^0-9]/g, '') // replace any non-numeric input
+      [key]: parseInt(value.replace(/[^0-9]/g, '')) // replace any non-numeric input
+    }));
+  };
+
+  const handleDaysInputChange = (key, value) => {
+    let bitmaskValue = 0;
+    for (const day of value) {
+      bitmaskValue += daysOfWeek[day]
+    };
+    setPrescriptionForm(prevForm => ({
+      ...prevForm,
+      [key]: value,
+      bitmaskDays: bitmaskValue
     }));
   };
   // console.log("prescriptionForm", prescriptionForm)
 
+  const [dropdowns, setDropdowns] = useState([
+    { key: 'status', isOpen: false },
+    { key: 'recurringDays', isOpen: false },
+    // Add more dropdowns as needed
+  ]);
+
+  const onDropdownOpen = useCallback((key, open) => {
+    const updatedDropdowns = dropdowns.map((dropdown) =>
+      dropdown.key === key ? { ...dropdown, isOpen: open } : { ...dropdown, isOpen: false }
+    );
+    setDropdowns(updatedDropdowns);
+  }, [dropdowns]);
+  // console.log('dropdowns', dropdowns)
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <TouchableWithoutFeedback onPress={() => setSelected(null)}>
+      <TouchableWithoutFeedback onPress={() => {
+        setSelected(null);
+        onDropdownOpen("");
+      }}>
         <View>
           <View style={styles.titleContainer}>
             <Text style={styles.tabTitle}>All Prescriptions</Text>
@@ -89,18 +96,6 @@ const PrescriptionList = () => {
           {selected && <Text>{selected}</Text>}
         </View>
       </TouchableWithoutFeedback>
-      <Button onPress={showDatepicker} title="Show date picker!" />
-      <Button onPress={showTimepicker} title="Show time picker!" />
-      {/* <Text>selected: {date.toLocaleString()}</Text> */}
-      {show && (
-        <DateTimePicker
-          testID="dateTimePicker"
-          value={date}
-          mode={mode}
-          is24Hour={true}
-          onChange={onChange}
-        />
-      )}
 
       <FAB
         icon="plus"
@@ -124,46 +119,65 @@ const PrescriptionList = () => {
                 setModalVisible(false);
               }
             }} >
-            <View style={styles.modalView}>
+            <TouchableWithoutFeedback onPress={() => {
+              onDropdownOpen("");
+              console.log('pressed')
+            }}>
+              <View style={styles.modalView}>
+                <TextBox
+                  property="title"
+                  value={prescriptionForm.title}
+                  label="Prescription Name:"
+                  handleChange={handleInputChange}
+                />
 
-              <TextBox
-                property="title"
-                value={prescriptionForm.title}
-                label="Prescription Name:"
-                handleInputChange={handleInputChange}
-              />
+                <NumberBox
+                  property="dose"
+                  value={prescriptionForm.dose}
+                  label="Dose amount (mg):"
+                  handleNumberInputChange={handleNumberInputChange}
+                />
 
-              <NumberBox
-                property="dose"
-                value={prescriptionForm.dose}
-                label="Dose amount:"
-                handleNumberInputChange={handleNumberInputChange}
-              />
-              {prescriptionForm.dose}
-              <DataPicker
-                label="Status: "
-                values={statuses}
-              />
+                <DataPicker
+                  label="Status: "
+                  values={statuses}
+                  zIndex={3000}
+                  zIndexInverse={1000}
+                  multiple={false}
+                  dropdownKey='status'
+                  onDropdownOpen={onDropdownOpen}
+                  isOpen={dropdowns.filter((d) => d.key === 'status')[0].isOpen}
+                  handleChange={handleInputChange}
+                />
 
-              <DataPicker
-                label="Repeat: "
-                values={Object.keys(daysOfWeek)}
-              />
+                <DataPicker
+                  label="Recurring Days: "
+                  values={Object.keys(daysOfWeek)}
+                  zIndex={1000}
+                  zIndexInverse={3000}
+                  multiple={true}
+                  dropdownKey='recurringDays'
+                  onDropdownOpen={onDropdownOpen}
+                  isOpen={dropdowns.filter((d) => d.key === 'recurringDays')[0].isOpen}
+                  handleChange={handleDaysInputChange}
+                />
 
-              <NumberBoxButton
-                label="Daily Frequency: "
-                property="frequency"
-                state={prescriptionForm}
-                setState={setPrescriptionForm}
-              />
+                <NumberBoxButton
+                  label="Daily Frequency: "
+                  property="dailyFrequency"
+                  state={prescriptionForm}
+                  setState={setPrescriptionForm}
+                />
 
-
-
-            </View>
+                <TimePicker
+                  label="Prescription Time: "
+                />
+              </View>
+            </TouchableWithoutFeedback>
           </Pressable>
         </View>
-      </Modal>
-    </SafeAreaView>
+      </Modal >
+    </SafeAreaView >
   )
 };
 
