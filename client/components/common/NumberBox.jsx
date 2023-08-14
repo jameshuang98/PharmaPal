@@ -26,7 +26,7 @@ const NumberBox = (props) => {
                     value != 0 && styles.hasValue
                 ]}
                 keyboardType = 'number-pad'
-                value={value}
+                value={value ? value.toString() : ''}
                 onChangeText={(value) => handleNumberInputChange(property, value)}
             />
         </View>

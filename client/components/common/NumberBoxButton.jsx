@@ -29,33 +29,32 @@ const NumberBoxButton = (props) => {
                         styles.input,
                         isFocused && styles.inputFocused,
                     ]}
-                    value={state[property]}
+                    value={state[property].toString()}
                 />
                 <View style={styles.buttonContainer} >
                     <Button
                         icon="plus"
-                        mode="elevated"
+                        mode="flat"
                         onPress={() => setState(prev => ({
                             ...prev,
                             [property]: state[property] + 1
                         }))}
                         style={styles.button}
-                        compact={true}
+                        // compact={true}
                         buttonColor="#f9f9f9"
                     />
 
                     <Button
-                        mode="elevated"
+                        icon="minus"
+                        mode="flat"
                         onPress={() => setState(prev => ({
                             ...prev,
                             [property]: state[property] - 1
                         }))}
-                        disabled={state[property] <= 0}
                         style={styles.button}
-                        buttonColor="#fbfbfb"
-                    >
-                        <Text style={{ fontSize: 30, paddingRight: 3 }}>-</Text>
-                    </Button>
+                        // compact={true}
+                        buttonColor="#f9f9f9"
+                    />
 
                 </View>
             </View>
@@ -81,7 +80,7 @@ const styles = StyleSheet.create({
         width: '30%',
         textAlign: 'center',
     },
-    
+
     inputFocused: {
         outlineWidth: 0
     },
@@ -103,13 +102,14 @@ const styles = StyleSheet.create({
     },
     button: {
         marginRight: 10,
-        paddingLeft: 6,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        width: 42,
-        minWidth: 42,
+        paddingLeft: 15,
+        paddingTop: 2,
+        // display: 'flex',
+        // justifyContent: 'center',
+        // alignItems: 'center',
+        // alignContent: 'center',
+        width: 50,
+        minWidth: 50,
         // textAlign: 'center'
     }
 });

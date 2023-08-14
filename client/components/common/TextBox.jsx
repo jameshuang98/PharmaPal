@@ -3,7 +3,7 @@ import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { COLORS } from '../../constants';
 
 const TextBox = (props) => {
-    const { property, value, label, handleInputChange } = props;
+    const { property, value, label, handleChange } = props;
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocus = () => {
@@ -26,7 +26,7 @@ const TextBox = (props) => {
                     value && styles.hasValue
                 ]}
                 value={value}
-                onChangeText={(value) => handleInputChange(property, value)}
+                onChangeText={(value) => handleChange(property, value)}
             />
         </View>
     );
