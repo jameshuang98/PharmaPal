@@ -23,11 +23,12 @@ const PrescriptionList = () => {
     frequency: 1,
     recurringDays: "",
     bitmaskDays: 0,
-    json: "",
+    json: {},
     status: "",
     title: "",
     userId: 1
   });
+  //{"1": "1690117371", "2": "1690167372", "3": "1690123372" }
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleInputChange = (key, value) => {
@@ -55,7 +56,15 @@ const PrescriptionList = () => {
       bitmaskDays: bitmaskValue
     }));
   };
-  // console.log("prescriptionForm", prescriptionForm)
+
+  const handleJsonInputChange = (key, value, doseNumber) => {
+    setPrescriptionForm(prevForm => ({
+      ...prevForm,
+      [key]: value
+    }));
+  };
+
+  console.log("prescriptionForm", prescriptionForm)
 
   const [dropdowns, setDropdowns] = useState([
     { key: 'status', isOpen: false },
@@ -170,7 +179,11 @@ const PrescriptionList = () => {
                 />
 
                 <TimePicker
-                  label="Prescription Time: "
+                  label="Prescription Time(s): "
+                  property="json"
+                  count={prescriptionForm.dailyFrequency}
+                  state={prescriptionForm}
+                  setState={setPrescriptionForm}
                 />
               </View>
             </TouchableWithoutFeedback>

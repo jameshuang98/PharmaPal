@@ -1,50 +1,74 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-
-import { COLORS } from '../../constants';
+import { Button } from 'react-native-paper';
+import { COLORS, SIZES } from '../../constants';
 
 const TimePicker = (props) => {
-    const { property, value, label, handleChange } = props;
+    const { label, property, count, state, setState } = props;
+    const [json, setJson] = useState(state);
+
+    const [listDateTimePickers, setListDateTimePickers] = useState([]);
+    useEffect(() => {
+        let list = [];
+        console.log('count', count)
+        for (let i = 0; i < count; i++) {
+            if (!Object.hasOwn(state[property], i)) {
+                setState(prev => ({
+                    ...prev,
+                    [property]: { ...state[property], [i]: new Date() }
+                }))
+            }
+            list.push(
+                <View key={i} style={styles.container}>
+                    <Text style={styles.dateLabel}>Dose #{i + 1}: </Text>
+                    <DateTimePicker
+                        testID="dateTimePicker"
+                        value={Object.hasOwn(state[property], i) ? state[property][i] : new Date()}
+                        mode={'time'}
+                        is24Hour={true}
+                        onChange={(event, time) => onChange(event, time, i)}
+                        style={styles.input}
+                    />
+                </View>
+            )
+        };
+        setListDateTimePickers(list)
+    }, [count]);
 
     const [time, setTime] = useState(new Date());
-    const [show, setShow] = useState(false);
 
-    const onChange = (event, selectedDate) => {
-        setShow(false);
-        setTime(selectedDate);
-        console.log('event', event)
+    const onChange = (event, selectedTime, doseNumber) => {
+        setState(prev => ({
+            ...prev,
+            [property]: { ...state[property], [doseNumber]: selectedTime }
+        }))
     };
 
     return (
         <View>
             <Text style={styles.label}>{label}</Text>
-            <Button onPress={() => setShow(true)} title="Show time picker!" />
-            <Text>selected: {time.toLocaleString()}</Text>
-            {show && (
-                <DateTimePicker
-                    testID="dateTimePicker"
-                    value={time}
-                    mode={'time'}
-                    is24Hour={true}
-                    onChange={onChange}
-                />
-            )}
+            {listDateTimePickers}
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    dateLabel: {
+        fontSize: SIZES.medium,
+        marginTop: 8,
+        marginLeft: SIZES.xLarge
+    },
     input: {
-        borderWidth: 1,
-        borderColor: '#C0C0C0',
-        borderRadius: 8,
-        paddingVertical: 12,
-        paddingHorizontal: 16,
+        // marginTop: 12,
+        marginHorizontal: SIZES.xSmall,
         fontSize: 16,
-        color: '#000',
-        backgroundColor: '#F0F0F0',
         marginBottom: 10,
+        outlineWidth: 0,
     },
     inputFocused: {
         outlineWidth: 0,
@@ -58,6 +82,20 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         marginBottom: 2,
+    },
+    button: {
+        marginTop: 2,
+        marginLeft: 15,
+        paddingLeft: 15,
+        paddingTop: 2,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
+        minWidth: 45,
+        width: 45,
+        height: 45,
+        borderRadius: 30
     }
 });
 
