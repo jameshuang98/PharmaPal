@@ -4,7 +4,8 @@ const COLORS = {
 
     white: "#FFFFFF",
     lightWhite: "#f2f2f2",
-
+    lighterWhite: "#f9f9f9",
+    
     primary: "#0c2431",
     secondary: "#194a50",
     tertiary: "#d37556",

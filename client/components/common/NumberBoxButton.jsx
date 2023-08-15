@@ -14,7 +14,7 @@ const NumberBoxButton = (props) => {
     const handleBlur = () => {
         setIsFocused(false);
     };
-    console.log('state', state)
+    // console.log('state', state)
     return (
         <View>
             <Text style={styles.label}>{label}</Text>
@@ -41,19 +41,20 @@ const NumberBoxButton = (props) => {
                         }))}
                         style={styles.button}
                         // compact={true}
-                        buttonColor="#f9f9f9"
+                        buttonColor={COLORS.lighterWhite}
                     />
 
                     <Button
                         icon="minus"
                         mode="flat"
+                        disabled={state[property] <= 0}
                         onPress={() => setState(prev => ({
                             ...prev,
                             [property]: state[property] - 1
                         }))}
                         style={styles.button}
                         // compact={true}
-                        buttonColor="#f9f9f9"
+                        buttonColor={COLORS.lighterWhite}
                     />
 
                 </View>
@@ -104,13 +105,13 @@ const styles = StyleSheet.create({
         marginRight: 10,
         paddingLeft: 15,
         paddingTop: 2,
-        // display: 'flex',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // alignContent: 'center',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignContent: 'center',
         width: 50,
         minWidth: 50,
-        // textAlign: 'center'
+        color: COLORS.primary
     }
 });
 
