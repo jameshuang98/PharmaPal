@@ -65,7 +65,6 @@ export default function usePrescriptionData() {
                 snapshot.docs.forEach((doc) => {
                     prescriptions.push({ ...doc.data(), id: doc.id })
                 })
-                // console.log(prescriptions)
                 setState({
                     prescriptionData: prescriptions
                 });
@@ -74,6 +73,20 @@ export default function usePrescriptionData() {
                 console.log(err.message)
             });
     }, []);
+
+    const createPrescription = (prescription) => {
+        return addDoc(prescriptionRef, prescription)
+            .then((docRef) => {
+                const res = {
+                    ...prescription,
+                    id: docRef.id
+                }
+                return res;
+            })
+            .catch((err) => {
+                console.log(err.message);
+            });
+    };
 
     // task to get record in record collection
     const getRecord = (prescriptionId, doseId) => {
@@ -91,7 +104,6 @@ export default function usePrescriptionData() {
                 } else if (records.length == 0) {
                     return null
                 }
-                console.log('records[0]', records[0])
                 return records[0]
             })
             .catch(err => {
@@ -108,7 +120,7 @@ export default function usePrescriptionData() {
             createdAt: record.createdAt,
             taken: record.taken,
             takenAt: record.takenAt
-        }
+        };
         return addDoc(recordRef, recordToCreate)
             .then((docRef) => {
                 const res = {
@@ -120,7 +132,6 @@ export default function usePrescriptionData() {
             .catch((err) => {
                 console.log(err.message);
             });
-
     };
 
     // takes 2 arguments: document reference and object
@@ -137,5 +148,5 @@ export default function usePrescriptionData() {
         })
     }
 
-    return { state, getRecord, createRecord, updateRecord };
+    return { state, createPrescription, getRecord, createRecord, updateRecord };
 };

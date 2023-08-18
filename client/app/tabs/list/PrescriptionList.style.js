@@ -1,17 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { FONT, SIZES, COLORS } from "../../../constants";
+import { FONT, SIZES, COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
   titleContainer: {
-    width: "100%",
+    width: '100%',
     marginTop: 10,
     marginBottom: 15
   },
   tabTitle: {
     fontSize: SIZES.large,
     color: COLORS.primary,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 2,
   },
   headerBtn: {
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    width: "100%"
+    width: '100%'
   },
   modalView: {
-    width: "90%",
-    height: "80%",
+    width: '90%',
+    height: '80%',
     marginBottom: 30,
     marginTop: 45,
     backgroundColor: 'white',
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    zIndex: 0
+    zIndex: 0,
+    display: 'flex',
+    justifyContent: 'space-between'
   },
   textInput: {
     height: 40,
@@ -78,11 +80,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   outsideModal: {
-    backgroundColor: "rgba(1, 1, 1, 0.2)",
+    backgroundColor: 'rgba(1, 1, 1, 0.2)',
     flexGrow: 1,
-    width: "100%",
-    height: "100%",
-    alignItems:"center"
+    width: '100%',
+    height: '100%',
+    alignItems: 'center'
+  },
+
+  formButtons: {
+    flexDirection: 'row',
+    columnGap:'10px',
+    alignSelf: 'flex-end'
+  },
+  save: {
+    backgroundColor: COLORS.primary,
+    color: COLORS.lightWhite
+  },
+  cancel: {
+    backgroundColor: COLORS.tertiary,
+    color: COLORS.lightWhite
   }
 });
 
