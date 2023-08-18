@@ -2,8 +2,9 @@ export const emptyPrescription = {
     id: "",
     dailyFrequency: 1,
     dose: 0,
-    frequency: 1,
-    json: "",
+    frequency: 1, // bitmaskValue
+    recurringDays: "",
+    json: {},
     status: "",
     title: "",
     userId: 1

@@ -5,17 +5,7 @@ import styles from './prescriptionView.style';
 const PrescriptionView = (props) => {
   const { prescription, selected, setSelected } = props;
   const { title, status, dose, dailyFrequency, json, frequency, id } = prescription;
-  const frequencyText = frequency === 1 ? `${dose} mg - ${dailyFrequency} times per day` : `${dose} mg every ${frequency} days`;
-
-  let dotStyle = styles.active;
-  switch (status) {
-    case status === "Paused":
-      dotStyle = styles.paused
-      break;
-    case status === "Active":
-    default:
-      break;
-  };
+  const frequencyText = dailyFrequency > 1 ? `${dose} mg - ${dailyFrequency} times per day` : `${dose} mg every ${frequency} days`;
 
   return (
     <View style={StyleSheet.compose(styles.container, selected === id ? styles.selected : "")}>
@@ -29,7 +19,7 @@ const PrescriptionView = (props) => {
             <Text>{frequencyText}</Text>
           </View>
           <View style={styles.rightSide}>
-            <View style={StyleSheet.compose(styles.dot, dotStyle)} />
+            <View style={StyleSheet.compose(styles.dot, status === "Active" ? styles.active : styles.paused)} />
             <Text>{status}</Text>
           </View>
         </View>

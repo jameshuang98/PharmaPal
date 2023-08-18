@@ -45,10 +45,10 @@ const PrescriptionItem = (props) => {
   useEffect(() => {
     getRecord(prescriptionId, doseId)
       .then((res) => {
-        console.log('useEffect res', res)
+        // console.log('useEffect res', res)
         if (res) {
           setRecord(res);
-        }
+        };
       })
       .catch(err => {
         console.log(err.message)
