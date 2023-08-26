@@ -3,6 +3,10 @@ import { StyleSheet } from 'react-native';
 import { FONT, SIZES, COLORS } from '../../../constants';
 
 const styles = StyleSheet.create({
+  container: {
+    height: '100%',
+    width: '100%'
+  },
   titleContainer: {
     width: '100%',
     marginTop: 10,
@@ -24,8 +28,10 @@ const styles = StyleSheet.create({
   fab: {
     backgroundColor: COLORS.white,
     color: COLORS.primary,
-    position: 'absolute',
     borderRadius: 30,
+  },
+  fabContainer: {
+    position: 'absolute',
     margin: 16,
     right: 0,
     bottom: 0
