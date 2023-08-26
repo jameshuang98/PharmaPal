@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
 
   formButtons: {
     flexDirection: 'row',
-    columnGap:'10px',
+    columnGap: '10px',
     alignSelf: 'flex-end'
   },
   save: {
@@ -108,6 +108,24 @@ const styles = StyleSheet.create({
   cancel: {
     backgroundColor: COLORS.tertiary,
     color: COLORS.lightWhite
+  },
+  deleteModalView: {
+    width: '70%',
+    marginTop: '75%',
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    alignItems: 'center',
+    elevation: 5,
+  },
+  deleteWarning: {
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  deleteModalButtons: {
+    flexDirection: 'row',
+    columnGap: '10px',
+    marginTop: 20
   }
 });
 

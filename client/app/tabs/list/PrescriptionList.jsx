@@ -33,6 +33,7 @@ import styles from './PrescriptionList.style';
 import { statuses, daysOfWeek, emptyPrescription } from '../../../constants/models';
 import { serverTimestamp } from 'firebase/firestore';
 import { convertPrescriptionFormToPrescription, convertPrescriptionToPrescriptionForm } from '../../helpers/helpers';
+import { COLORS } from '../../../constants';
 
 
 
@@ -42,7 +43,7 @@ const PrescriptionList = () => {
 
   const [selected, setSelected] = useState(null);
   const [prescriptionForm, setPrescriptionForm] = useState(emptyPrescription);
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible, setModalVisible] = useState("");
   const [dropdowns, setDropdowns] = useState([
     { key: 'status', isOpen: false },
     { key: 'recurringDays', isOpen: false },
@@ -88,7 +89,7 @@ const PrescriptionList = () => {
 
   const reset = () => {
     onDropdownOpen("", false);
-    setModalVisible(false)
+    setModalVisible("")
     setPrescriptionForm(emptyPrescription)
     setSelected(null);
     toggleFabButtons(false);
@@ -190,8 +191,9 @@ const PrescriptionList = () => {
               mode={selected ? 'elevated' : 'flat'}
               accessibilityLabel="Delete prescription"
               onPress={() => {
-                deletePrescription(selected);
-                reset();
+                setModalVisible("delete");
+                // deletePrescription(selected);
+                // reset();
               }}
             />
           </Animated.View>
@@ -202,10 +204,10 @@ const PrescriptionList = () => {
               style={styles.fab}
               mode={selected ? 'elevated' : 'flat'}
               accessibilityLabel="Edit prescription"
-              onPress={() => setModalVisible(true)}
+              onPress={() => setModalVisible("form")}
             />
           </Animated.View>
-          <View  style={[{ zIndex: 15 }]}>
+          <View style={[{ zIndex: 15 }]}>
 
             <FAB
               icon="plus"
@@ -213,7 +215,7 @@ const PrescriptionList = () => {
               accessibilityLabel="Add new prescription"
               onPress={() => {
                 handleSelectPrescription(null);
-                setModalVisible(true);
+                setModalVisible("form");
               }}
             />
           </View>
@@ -221,7 +223,7 @@ const PrescriptionList = () => {
           <Modal
             animationType="none"
             transparent={true}
-            visible={modalVisible}
+            visible={modalVisible === "form"}
             onRequestClose={() => {
               reset();
             }}>
@@ -236,8 +238,9 @@ const PrescriptionList = () => {
                   onDropdownOpen("");
                   console.log('pressed')
                 }}>
+
                   <View style={styles.modalView}>
-                    <View>
+                    <View style={styles.inputs}>
                       <TextBox
                         property="title"
                         value={prescriptionForm.title}
@@ -308,6 +311,46 @@ const PrescriptionList = () => {
               </Pressable>
             </View>
           </Modal >
+
+          <Modal
+            animationType="none"
+            transparent={true}
+            visible={modalVisible === "delete"}
+            onRequestClose={() => {
+              reset();
+            }}>
+            <View style={styles.modalContainer}>
+              <Pressable style={styles.outsideModal}
+                onPress={(event) => {
+                  if (event.target == event.currentTarget) {
+                    setModalVisible("");
+                  };
+                }} >
+                <View style={styles.deleteModalView}>
+                  <Text style={styles.deleteWarning}>Are you sure you want to delete this prescription?</Text>
+                  <View style={styles.deleteModalButtons}>
+                    <Button
+                      mode="contained"
+                      buttonColor={COLORS.tertiary}
+                      onPress={() => setModalVisible("")}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      mode="contained"
+                      buttonColor={COLORS.primary}
+                      onPress={() => {
+                        deletePrescription(selected);
+                        reset();
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </View>
+                </View>
+              </Pressable>
+            </View>
+          </Modal>
 
         </View>
       </TouchableWithoutFeedback>
