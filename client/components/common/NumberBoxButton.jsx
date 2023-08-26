@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Button, IconButton } from 'react-native-paper';
 import { COLORS } from '../../constants';
 
 const NumberBoxButton = (props) => {
@@ -32,29 +32,32 @@ const NumberBoxButton = (props) => {
                     value={state[property].toString()}
                 />
                 <View style={styles.buttonContainer} >
-                    <Button
+
+                    <IconButton
                         icon="plus"
-                        mode="flat"
+                        mode="contained-tonal"
+                        iconColor={COLORS.primary}
+                        containerColor={COLORS.lighterWhite}
+                        size={25}
+                        style={styles.button}
                         onPress={() => setState(prev => ({
                             ...prev,
                             [property]: state[property] + 1
                         }))}
-                        style={styles.button}
-                        // compact={true}
-                        buttonColor={COLORS.lighterWhite}
                     />
 
-                    <Button
+                    <IconButton
                         icon="minus"
-                        mode="flat"
+                        mode="contained-tonal"
+                        iconColor={COLORS.primary}
+                        containerColor={COLORS.lighterWhite}
+                        size={25}
+                        style={styles.button}
                         disabled={state[property] <= 0}
                         onPress={() => setState(prev => ({
                             ...prev,
                             [property]: state[property] - 1
                         }))}
-                        style={styles.button}
-                        // compact={true}
-                        buttonColor={COLORS.lighterWhite}
                     />
 
                 </View>
@@ -103,15 +106,6 @@ const styles = StyleSheet.create({
     },
     button: {
         marginRight: 10,
-        paddingLeft: 15,
-        paddingTop: 2,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        alignContent: 'center',
-        width: 50,
-        minWidth: 50,
-        color: COLORS.primary
     }
 });
 
