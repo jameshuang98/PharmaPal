@@ -68,6 +68,9 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'space-between'
   },
+  inputs: {
+    maxWidth: '300px'
+  },
   textInput: {
     height: 40,
     margin: 5,

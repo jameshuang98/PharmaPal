@@ -203,16 +203,18 @@ const PrescriptionList = () => {
               onPress={() => setModalVisible(true)}
             />
           </Animated.View>
+          <View  style={[{ zIndex: 15 }]}>
 
-          <FAB
-            icon="plus"
-            style={[styles.fabContainer, styles.fab, { zIndex: 15 }]}
-            accessibilityLabel="Add new prescription"
-            onPress={() => {
-              handleSelectPrescription(null);
-              setModalVisible(true);
-            }}
-          />
+            <FAB
+              icon="plus"
+              style={[styles.fabContainer, styles.fab, { zIndex: 15 }]}
+              accessibilityLabel="Add new prescription"
+              onPress={() => {
+                handleSelectPrescription(null);
+                setModalVisible(true);
+              }}
+            />
+          </View>
 
           <Modal
             animationType="none"
@@ -263,6 +265,7 @@ const PrescriptionList = () => {
 
                       <DataPicker
                         label="Recurring Days: "
+                        initialValue={prescriptionForm.recurringDays}
                         values={Object.keys(daysOfWeek)}
                         zIndex={1000}
                         zIndexInverse={3000}
