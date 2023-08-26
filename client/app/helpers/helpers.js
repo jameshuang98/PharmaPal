@@ -46,6 +46,7 @@ export function convertPrescriptionToPrescriptionForm(prescription) {
   prescriptionForm.dailyFrequency = prescription.dailyFrequency;
   prescriptionForm.dose = prescription.dose;
   prescriptionForm.frequency = prescription.frequency;
+  prescriptionForm.recurringDays = getSelectedDays(prescription.frequency);
   prescriptionForm.json = JSON.parse(prescription.json);
   for (const key in prescriptionForm.json) {
     const dateObj = new Date(prescriptionForm.json[key] * 1000)
