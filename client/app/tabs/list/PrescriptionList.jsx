@@ -121,13 +121,13 @@ const PrescriptionList = () => {
     if (!toggleOn) {
       Animated.timing(animationValue1, {
         toValue: 0,
-        duration: 300,
+        duration: 100,
         useNativeDriver: false,
       }).start();
 
       Animated.timing(animationValue2, {
         toValue: 0,
-        duration: 300,
+        duration: 100,
         useNativeDriver: false,
       }).start();
     } else {
@@ -187,6 +187,7 @@ const PrescriptionList = () => {
             <FAB
               icon="delete"
               style={styles.fab}
+              mode={selected ? 'elevated' : 'flat'}
               accessibilityLabel="Delete prescription"
               onPress={() => {
                 deletePrescription(selected);
@@ -199,6 +200,7 @@ const PrescriptionList = () => {
             <FAB
               icon="pencil"
               style={styles.fab}
+              mode={selected ? 'elevated' : 'flat'}
               accessibilityLabel="Edit prescription"
               onPress={() => setModalVisible(true)}
             />
