@@ -4,12 +4,12 @@ import { useState } from 'react';
 import { COLORS } from '../../constants';
 
 const DataPicker = (props) => {
-    const { label, values, zIndex, zIndexInverse, multiple, dropdownKey, onDropdownOpen, isOpen, handleChange } = props;
+    const { label, values, initialValue, zIndex, zIndexInverse, multiple, dropdownKey, onDropdownOpen, isOpen, handleChange } = props;
     const pickerItems = values.map((item) => {
         return { label: item, value: item }
     });
 
-    const [value, setValue] = useState(null);
+    const [value, setValue] = useState(initialValue);
     const [items, setItems] = useState(pickerItems);
 
 

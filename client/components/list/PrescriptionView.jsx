@@ -3,14 +3,14 @@ import { useState, useEffect } from 'react';
 import styles from './prescriptionView.style';
 
 const PrescriptionView = (props) => {
-  const { prescription, selected, setSelected } = props;
+  const { prescription, selected, handleSelectPrescription } = props;
   const { title, status, dose, dailyFrequency, json, frequency, id } = prescription;
   const frequencyText = dailyFrequency > 1 ? `${dose} mg - ${dailyFrequency} times per day` : `${dose} mg every ${frequency} days`;
 
   return (
     <View style={StyleSheet.compose(styles.container, selected === id ? styles.selected : "")}>
       <TouchableWithoutFeedback
-        onPress={() => { selected === id ? setSelected(null) : setSelected(id) }}
+        onPress={() => { selected === id ? handleSelectPrescription(null) : handleSelectPrescription(id); }}
         style={styles.button}
       >
         <View style={styles.content}>

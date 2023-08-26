@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2ecc71', // Green color
   },
   paused: {
-    backgroundColor: '#fff700', // Green color
+    backgroundColor: '#fff700', // Yellow color
   },
   button: {
     width: "100%",
