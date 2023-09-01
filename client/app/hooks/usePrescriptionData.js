@@ -54,40 +54,9 @@ export default function usePrescriptionData() {
     // single timeslot_list (group by time to take medicine (from json))
     // [{"title": "zoloft", "dose":"50"}, {"title": "aderall", "dose":"20"}]
 
-
-
-    // getting data and storing it in state
-    // useEffect(() => {
-    //     let prescriptions = []
-    //     getDocs(prescriptionRef)
-    //         .then((snapshot) => {
-    //             snapshot.docs.forEach((doc) => {
-    //                 prescriptions.push({ ...doc.data(), id: doc.id })
-    //             })
-    //             setState({
-    //                 prescriptionData: prescriptions
-    //             });
-    //         })
-    //         .catch(err => {
-    //             console.log(err.message)
-    //         });
-    // }, []);
-
-
-    // subscribe to the prescription collection to get real time collection data
-    // onSnapshot(prescriptionRef, (snapshot) => {
-    //     let prescriptions = []
-    //     snapshot.docs.forEach((doc) => {
-    //         prescriptions.push({ ...doc.data(), id: doc.id })
-    //     })
-    //     setState(prev => ({
-    //         ...prev,
-    //         prescriptionData: prescriptions
-    //     }));
-    // });
-
     useEffect(() => {
         // calls the onSnapshot function as well as stores the unsubscribe function into the unsub variable
+        // subscribe to the prescription collection to get real time collection data
         const unsub = onSnapshot(prescriptionRef, (snapshot) => {
             let prescriptions = [];
             snapshot.docs.forEach((doc) => {
