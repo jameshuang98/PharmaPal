@@ -240,7 +240,7 @@ const PrescriptionList = () => {
                 }}>
 
                   <View style={styles.modalView}>
-                    <View style={styles.inputs}>
+                    <ScrollView style={styles.inputs}>
                       <TextBox
                         property="title"
                         value={prescriptionForm.title}
@@ -295,7 +295,7 @@ const PrescriptionList = () => {
                         state={prescriptionForm}
                         setState={setPrescriptionForm}
                       />
-                    </View>
+                    </ScrollView>
 
                     <View style={styles.formButtons}>
                       <Button mode="contained" onPress={reset} style={styles.cancel}>

@@ -57,7 +57,7 @@ export default function usePrescriptionData() {
     useEffect(() => {
         // calls the onSnapshot function as well as stores the unsubscribe function into the unsub variable
         // subscribe to the prescription collection to get real time collection data
-        const unsub = onSnapshot(prescriptionRef, (snapshot) => {
+        const unsubPrescription = onSnapshot(prescriptionRef, (snapshot) => {
             let prescriptions = [];
             snapshot.docs.forEach((doc) => {
                 prescriptions.push({ ...doc.data(), id: doc.id })
@@ -71,7 +71,7 @@ export default function usePrescriptionData() {
         // unsubscribe when the component unmounts to prevent memory leak
         // otherwise the subscription would still be active even after component unmounts
         return () => {
-            unsub();
+            unsubPrescription();
         }
     }, []);
 

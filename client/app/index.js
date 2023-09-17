@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import Home from './tabs/home/Home';
 import PrescriptionList from './tabs/list/PrescriptionList';
-import CalendarTab from './tabs/calendar/CalendarTab';
+import PrescriptionHistory from './tabs/calendar/PrescriptionHistory';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -48,7 +48,7 @@ function App() {
 
                 <Tab.Screen
                     name="Calendar View"
-                    component={CalendarTab}
+                    component={PrescriptionHistory}
                     options={{
                         tabBarIcon: ({ focused, color, size }) => (
                             <Ionicons

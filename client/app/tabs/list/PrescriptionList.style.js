@@ -54,8 +54,8 @@ const styles = StyleSheet.create({
     marginTop: 45,
     backgroundColor: 'white',
     borderRadius: 20,
-    padding: 35,
-    alignItems: 'flex-start',
+    // padding: 35,
+    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   inputs: {
-    maxWidth: '300px'
+    maxWidth: '100%',
+    padding: '35px'
   },
   textInput: {
     height: 40,
@@ -99,7 +100,8 @@ const styles = StyleSheet.create({
   formButtons: {
     flexDirection: 'row',
     columnGap: '10px',
-    alignSelf: 'flex-end'
+    alignSelf: 'flex-end',
+    margin: 15
   },
   save: {
     backgroundColor: COLORS.primary,
