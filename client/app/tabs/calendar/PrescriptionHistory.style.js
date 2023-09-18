@@ -17,7 +17,19 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontWeight: 'bold',
     marginTop: 2,
-  }
+  },
+  calendar: {
+    paddingLeft: 20,
+    paddingRight: 20
+  },
+  header: {
+    backgroundColor: 'lightgrey'
+  },
+  // section: {
+  //   backgroundColor: lightThemeColor,
+  //   color: 'grey',
+  //   textTransform: 'capitalize'
+  // }
 });
 
 export default styles;
