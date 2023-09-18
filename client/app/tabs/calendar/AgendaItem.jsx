@@ -2,14 +2,11 @@ import isEmpty from 'lodash/isEmpty';
 import React, { useCallback } from 'react';
 import { StyleSheet, Alert, View, Text, TouchableOpacity, Button } from 'react-native';
 import testIDs from '../../../constants/testIDs';
+import Checkbox from 'expo-checkbox';
 
 
 const AgendaItem = (props) => {
     const { item } = props;
-
-    const buttonPressed = useCallback(() => {
-        Alert.alert('Show me more');
-    }, []);
 
     const itemPressed = useCallback(() => {
         Alert.alert(item.title);
@@ -31,7 +28,10 @@ const AgendaItem = (props) => {
             </View>
             <Text style={styles.itemTitleText}>{item.title}</Text>
             <View style={styles.itemButtonContainer}>
-                <Text style={styles.itemHourText}>Taken</Text>
+                <Checkbox
+                    value={true}
+                    disabled
+                />
             </View>
         </TouchableOpacity>
     );

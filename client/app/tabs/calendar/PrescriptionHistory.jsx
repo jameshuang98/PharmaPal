@@ -12,7 +12,6 @@ const leftArrowIcon = require('../../../assets/icons/previous.png');
 const rightArrowIcon = require('../../../assets/icons/next.png');
 
 const PrescriptionHistory = () => {
-  const weekView = false;
   const marked = useRef(getMarkedDates());
   const theme = useRef(getTheme());
   const todayBtnTheme = useRef({
@@ -43,34 +42,26 @@ const PrescriptionHistory = () => {
         theme={todayBtnTheme.current}
       // todayBottomMargin={16}
       >
-        {weekView ? (
-          <WeekCalendar
-            testID={testIDs.weekCalendar.CONTAINER}
-            firstDay={1}
-            markedDates={marked.current}
-          />
-        ) : (
-          <ExpandableCalendar
-            testID={testIDs.expandableCalendar.CONTAINER}
-            // horizontal={false}
-            // hideArrows
-            allowShawdow
-            initialPosition={ExpandableCalendar.positions.OPEN}
-            // disablePan
-            // hideKnob
-            // calendarStyle={styles.calendar}
-            // headerStyle={styles.header} // for horizontal only
-            // disableWeekScroll
-            theme={theme.current}
-            // disableAllTouchEventsForDisabledDays
-            firstDay={1}
-            markedDates={marked.current}
-            leftArrowImageSource={leftArrowIcon}
-            rightArrowImageSource={rightArrowIcon}
-            // animateScroll
-            closeOnDayPress={false}
-          />
-        )}
+        <ExpandableCalendar
+          testID={testIDs.expandableCalendar.CONTAINER}
+          // horizontal={false}
+          // hideArrows
+          allowShawdow
+          initialPosition={ExpandableCalendar.positions.OPEN}
+          // disablePan
+          // hideKnob
+          // calendarStyle={styles.calendar}
+          // headerStyle={styles.header} // for horizontal only
+          // disableWeekScroll
+          theme={theme.current}
+          // disableAllTouchEventsForDisabledDays
+          firstDay={1}
+          markedDates={marked.current}
+          leftArrowImageSource={leftArrowIcon}
+          rightArrowImageSource={rightArrowIcon}
+          animateScroll
+          closeOnDayPress={false}
+        />
         <AgendaList
           sections={agendaItems}
           renderItem={renderItem}
