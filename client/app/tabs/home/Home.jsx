@@ -6,7 +6,7 @@ import usePrescriptionData from '../../hooks/usePrescriptionData';
 
 const Home = () => {
   const { state } = usePrescriptionData();
-  // console.log(state);
+  console.log(state);
   let timeslotData = {};
   for (const p of state.prescriptionData) {
     let json = JSON.parse(p.json);

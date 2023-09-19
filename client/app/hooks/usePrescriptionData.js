@@ -68,11 +68,23 @@ export default function usePrescriptionData() {
             }));
         });
 
+        const unsubRecord = onSnapshot(recordRef, (snapshot) => {
+            let records = [];
+            snapshot.docs.forEach((doc) => {
+                records.push({ ...doc.data(), id: doc.id })
+            });
+            setState(prev => ({
+                ...prev,
+                recordData: records
+            }));
+        });
+
         // unsubscribe when the component unmounts to prevent memory leak
         // otherwise the subscription would still be active even after component unmounts
         return () => {
             unsubPrescription();
-        }
+            unsubRecord();
+        };
     }, []);
 
     // subscribe to the record collection to get real time collection data

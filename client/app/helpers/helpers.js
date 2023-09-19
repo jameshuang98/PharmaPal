@@ -28,7 +28,22 @@ export function isSameDay(timestamp1, timestamp2) {
 //   const timestamp2 = 1690710005; // Represents 2023-07-28T22:20:05-07:00
 //   console.log(isSameDay(timestamp1, timestamp2)); // Output: true (both timestamps are from the same day)
 
+export function getTimeToMinute(unixTimestamp) {
+  const date = new Date(unixTimestamp * 1000); // Convert Unix timestamp to milliseconds
 
+  let hours = date.getHours();
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  // Convert to 12-hour format
+  if (hours > 12) {
+    hours -= 12;
+  } else if (hours === 0) {
+    hours = 12;
+  }
+
+  return `${hours}:${minutes} ${ampm}`;
+}
 
 export function getSelectedDays(bitmask) {
   const selectedDays = [];

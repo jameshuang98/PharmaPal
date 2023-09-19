@@ -1,18 +1,22 @@
 import { View, Text, SafeAreaView, TouchableOpacity, Animated } from 'react-native';
 import { useState, useRef, useCallback } from 'react';
-import { FAB } from 'react-native-paper';
 import styles from './PrescriptionHistory.style';
 import { Calendar, CalendarList, Agenda, ExpandableCalendar, AgendaList, CalendarProvider, WeekCalendar } from 'react-native-calendars';
 import testIDs from '../../../constants/testIDs';
-import { agendaItems, getMarkedDates } from './agendaItems';
+import { getMarkedDates, getRecordItems } from './agendaItems';
 import AgendaItem from './AgendaItem';
 import { getTheme, themeColor, lightThemeColor } from './theme';
+import usePrescriptionData from '../../hooks/usePrescriptionData';
 
 const leftArrowIcon = require('../../../assets/icons/previous.png');
 const rightArrowIcon = require('../../../assets/icons/next.png');
 
 const PrescriptionHistory = () => {
-  const marked = useRef(getMarkedDates());
+  const { state } = usePrescriptionData();
+  const recordItems = getRecordItems(state.recordData, state.prescriptionData);
+  console.log('recordItems', recordItems)
+  const marked = getMarkedDates(recordItems);
+  // console.log('marked', marked.current)
   const theme = useRef(getTheme());
   const todayBtnTheme = useRef({
     todayButtonTextColor: themeColor
@@ -30,11 +34,13 @@ const PrescriptionHistory = () => {
     return <AgendaItem item={item} />;
   }, []);
 
+  const today = new Date().toISOString().split('T')[0];
+
   return (
     <SafeAreaView style={styles.container}>
 
       <CalendarProvider
-        date={agendaItems[1]?.title}
+        date={today}
         // onDateChanged={onDateChanged}
         // onMonthChange={onMonthChange}
         // showTodayButton
@@ -56,14 +62,14 @@ const PrescriptionHistory = () => {
           theme={theme.current}
           // disableAllTouchEventsForDisabledDays
           firstDay={1}
-          markedDates={marked.current}
+          markedDates={marked}
           leftArrowImageSource={leftArrowIcon}
           rightArrowImageSource={rightArrowIcon}
           animateScroll
           closeOnDayPress={false}
         />
         <AgendaList
-          sections={agendaItems}
+          sections={recordItems}
           renderItem={renderItem}
           // scrollToNextEvent=[]
           sectionStyle={styles.section}

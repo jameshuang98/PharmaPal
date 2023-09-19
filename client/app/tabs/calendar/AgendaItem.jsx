@@ -3,35 +3,33 @@ import React, { useCallback } from 'react';
 import { StyleSheet, Alert, View, Text, TouchableOpacity, Button } from 'react-native';
 import testIDs from '../../../constants/testIDs';
 import Checkbox from 'expo-checkbox';
-
+import { getTimeToMinute } from '../../helpers/helpers';
 
 const AgendaItem = (props) => {
     const { item } = props;
+    // console.log('item', item)
+    const time = getTimeToMinute(item.takenAt.seconds)
 
     const itemPressed = useCallback(() => {
         Alert.alert(item.title);
     }, []);
 
-    if (isEmpty(item)) {
-        return (
-            <View style={styles.emptyItem}>
-                <Text style={styles.emptyItemText}>No Events Planned Today</Text>
-            </View>
-        );
-    }
-
     return (
         <TouchableOpacity onPress={itemPressed} style={styles.item} testID={testIDs.agenda.ITEM}>
             <View>
-                <Text style={styles.itemHourText}>{item.hour}</Text>
-                <Text style={styles.itemDurationText}>{item.duration}</Text>
+                <Text style={styles.itemTitleText}>{item.title}</Text>
+                <Text style={styles.itemDoseText}>{item.dose}mg</Text>
             </View>
-            <Text style={styles.itemTitleText}>{item.title}</Text>
-            <View style={styles.itemButtonContainer}>
-                <Checkbox
-                    value={true}
-                    disabled
-                />
+            <View style={styles.rightSection}>
+                <View>
+                    {item.taken && <Text style={styles.itemTakenText}>Taken at {time}</Text>}
+                </View>
+                <View style={styles.itemButtonContainer}>
+                    <Checkbox
+                        value={item.taken}
+                        disabled
+                    />
+                </View>
             </View>
         </TouchableOpacity>
     );
@@ -46,36 +44,32 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         borderBottomWidth: 1,
         borderBottomColor: 'lightgrey',
+        display: 'flex',
+        justifyContent: 'space-between',
         flexDirection: 'row'
     },
-    itemHourText: {
-        color: 'black'
+    itemTakenText: {
+        color: 'black',
+        alignSelf: 'center',
+        marginLeft: 12
     },
-    itemDurationText: {
+    itemDoseText: {
         color: 'grey',
         fontSize: 12,
         marginTop: 4,
-        marginLeft: 4
+        marginLeft: 8
     },
     itemTitleText: {
         color: 'black',
-        marginLeft: 16,
+        marginLeft: 8,
         fontWeight: 'bold',
         fontSize: 16
     },
     itemButtonContainer: {
-        flex: 1,
-        alignItems: 'flex-end'
+        marginLeft: 10
     },
-    emptyItem: {
-        paddingLeft: 20,
-        height: 52,
-        justifyContent: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: 'lightgrey'
-    },
-    emptyItemText: {
-        color: 'lightgrey',
-        fontSize: 14
+    rightSection: {
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });
