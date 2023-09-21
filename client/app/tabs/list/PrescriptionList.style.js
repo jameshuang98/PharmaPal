@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   inputs: {
     maxWidth: '100%',
-    padding: '35px'
+    padding: 35
   },
   textInput: {
     height: 40,
