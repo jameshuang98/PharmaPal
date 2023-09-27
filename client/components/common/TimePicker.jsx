@@ -9,31 +9,38 @@ const TimePicker = (props) => {
     const [json, setJson] = useState(state);
 
     const [listDateTimePickers, setListDateTimePickers] = useState([]);
-    
+
     useEffect(() => {
         let list = [];
         console.log('count', count)
-        for (let i = 0; i < count; i++) {
-            if (!Object.hasOwn(state[property], i)) {
-                setState(prev => ({
-                    ...prev,
-                    [property]: { ...state[property], [i]: new Date() }
-                }))
-            }
-            list.push(
-                <View key={i} style={styles.container}>
-                    <Text style={styles.dateLabel}>Dose #{i + 1}: </Text>
-                    <DateTimePicker
-                        testID="dateTimePicker"
-                        value={Object.hasOwn(state[property], i) ? state[property][i] : new Date()}
-                        mode={'time'}
-                        is24Hour={true}
-                        onChange={(event, time) => onChange(event, time, i)}
-                        style={styles.input}
-                    />
-                </View>
-            )
-        };
+        if (count === 0) {
+            setState(prev => ({
+                ...prev,
+                [property]: {}
+            }))
+        } else {
+            for (let i = 0; i < count; i++) {
+                if (!Object.hasOwn(state[property], i)) {
+                    setState(prev => ({
+                        ...prev,
+                        [property]: { ...state[property], [i]: new Date() }
+                    }))
+                }
+                list.push(
+                    <View key={i} style={styles.container}>
+                        <Text style={styles.dateLabel}>Dose #{i + 1}: </Text>
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={Object.hasOwn(state[property], i) ? state[property][i] : new Date()}
+                            mode={'time'}
+                            is24Hour={true}
+                            onChange={(event, time) => onChange(event, time, i)}
+                            style={styles.input}
+                        />
+                    </View>
+                )
+            };
+        }
         setListDateTimePickers(list)
     }, [count]);
 
