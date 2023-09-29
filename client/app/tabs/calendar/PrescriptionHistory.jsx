@@ -13,8 +13,9 @@ const rightArrowIcon = require('../../../assets/icons/next.png');
 
 const PrescriptionHistory = () => {
   const { state } = usePrescriptionData();
+  // console.log("state", state)
   const recordItems = getRecordItems(state.recordData, state.prescriptionData);
-  console.log('recordItems', recordItems)
+  // console.log('recordItems', recordItems)
   const marked = getMarkedDates(recordItems);
   // console.log('marked', marked.current)
   const theme = useRef(getTheme());

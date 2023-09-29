@@ -2,8 +2,11 @@ import isEmpty from 'lodash/isEmpty';
 // import {MarkedDates} from '../../../src/types';
 
 export function getRecordItems(records, prescriptions) {
-  const items = records.reduce((result, inputObj) => {
-    const { createdAt, prescriptionId, taken, takenAt, doseId, id } = inputObj;
+  console.log("records", records)
+  console.log("prescriptions", prescriptions)
+
+  const items = records.reduce((result, record) => {
+    const { createdAt, prescriptionId, taken, takenAt, doseId, id } = record;
 
     // Convert timestamp to yyyy-mm-dd format
     const date = new Date(createdAt.seconds * 1000);
@@ -13,7 +16,7 @@ export function getRecordItems(records, prescriptions) {
     const formattedDate = `${year}-${month}-${day}`;
 
     const prescription = prescriptions.find(p => p.id == prescriptionId);
-    console.log('prescription', prescription)
+    // console.log('prescription', prescription)
     const dose = prescription.dose;
     const title = prescription.title;
 

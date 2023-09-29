@@ -7,6 +7,7 @@ export function getTodayTimestamp() {
   currentDate.setHours(0);
   currentDate.setMinutes(1);
   currentDate.setSeconds(0);
+  currentDate.setMilliseconds(0)
 
   return currentDate;
 }

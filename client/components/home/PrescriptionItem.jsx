@@ -14,7 +14,7 @@ const PrescriptionItem = (props) => {
   // console.log('prescriptionId', prescriptionId)
 
   const setChecked = () => {
-    const r = {
+    const rec = {
       prescriptionId,
       doseId,
       createdAt: Timestamp.fromDate(getTodayTimestamp()),
@@ -22,7 +22,7 @@ const PrescriptionItem = (props) => {
       takenAt: serverTimestamp()
     }
     if (!record.id) {
-      createRecord(r)
+      createRecord(rec)
         .then((res) => {
           console.log('createRecord res', res)
           if (res) {
@@ -37,17 +37,36 @@ const PrescriptionItem = (props) => {
       setRecord({
         ...record,
         taken: !record.taken,
-        takenAt: !record.taken ? serverTimestamp() : record.takenAt
+        takenAt: record.taken ? serverTimestamp() : record.takenAt
       });
     }
   };
 
   useEffect(() => {
-    getRecord(prescriptionId, doseId)
+    const rec = {
+      prescriptionId,
+      doseId,
+      createdAt: Timestamp.fromDate(getTodayTimestamp()),
+      taken: false,
+      takenAt: Timestamp.fromDate(getTodayTimestamp())
+    }
+    // console.log("useEffect rec", rec)
+    getRecord(prescriptionId, doseId, rec.createdAt)
       .then((res) => {
-        // console.log('useEffect res', res)
+        console.log('getRecord res', res)
         if (res) {
+          const newDate = new Date(res.createdAt.seconds * 1000)
+          console.log('getRecord newDate', newDate)
           setRecord(res);
+        } else {
+          createRecord(rec)
+            .then((res) => {
+              console.log('createRecord res', res)
+              setRecord(res);
+            })
+            .catch(err => {
+              console.log(err.message)
+            })
         };
       })
       .catch(err => {

@@ -31,7 +31,6 @@ import styles from './PrescriptionList.style';
 
 // Constants and helpers imports
 import { statuses, daysOfWeek, emptyPrescription } from '../../../constants/models';
-import { serverTimestamp } from 'firebase/firestore';
 import { convertPrescriptionFormToPrescription, convertPrescriptionToPrescriptionForm } from '../../helpers/helpers';
 import { COLORS } from '../../../constants';
 
@@ -39,7 +38,7 @@ import { COLORS } from '../../../constants';
 
 const PrescriptionList = () => {
   let { state, createPrescription, updatePrescription, deletePrescription } = usePrescriptionData();
-  console.log("prescriptionList state", state);
+  // console.log("prescriptionList state", state);
 
   const [selected, setSelected] = useState(null);
   const [prescriptionForm, setPrescriptionForm] = useState(emptyPrescription);
@@ -84,7 +83,7 @@ const PrescriptionList = () => {
     }));
   };
 
-  console.log("prescriptionForm", prescriptionForm)
+  // console.log("prescriptionForm", prescriptionForm)
 
 
   const reset = () => {
@@ -97,6 +96,7 @@ const PrescriptionList = () => {
 
   const save = () => {
     const prescription = convertPrescriptionFormToPrescription(prescriptionForm)
+    // console.log("prescription save", prescription)
     const isPrescriptionExist = state.prescriptionData.find(p => p.id === prescriptionForm.id) ?? false;
     console.log('isPrescriptionExist', isPrescriptionExist)
     if (!isPrescriptionExist) {
@@ -113,8 +113,6 @@ const PrescriptionList = () => {
     }
     reset();
   }
-
-
 
   const animationValue1 = useRef(new Animated.Value(0)).current;
   const animationValue2 = useRef(new Animated.Value(0)).current;

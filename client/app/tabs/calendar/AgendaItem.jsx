@@ -7,7 +7,7 @@ import { getTimeToMinute } from '../../helpers/helpers';
 
 const AgendaItem = (props) => {
     const { item } = props;
-    // console.log('item', item)
+    console.log('item', item)
     const time = getTimeToMinute(item.takenAt.seconds)
 
     const itemPressed = useCallback(() => {

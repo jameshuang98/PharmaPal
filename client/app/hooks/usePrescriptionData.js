@@ -129,15 +129,16 @@ export default function usePrescriptionData() {
 
     // METHODS FOR RECORD COLLECTION
 
-    const getRecord = async (prescriptionId, doseId) => {
+    const getRecord = async (prescriptionId, doseId, createdAt) => {
         let records = []
-        const q = query(recordRef, where("prescriptionId", "==", prescriptionId), where("doseId", "==", parseInt(doseId)));
+        const q = query(recordRef, where("prescriptionId", "==", prescriptionId), where("doseId", "==", parseInt(doseId)), where("createdAt", "==", createdAt));
 
         return getDocs(q)
             .then((snapshot) => {
                 snapshot.docs.forEach((doc) => {
                     records.push({ ...doc.data(), id: doc.id })
                 });
+                // console.log("records", records)
 
                 if (records.length > 1) {
                     throw new Error(`Error! More than one record found with prescriptionId: ${prescriptionId} and doseId: ${doseId}`);
@@ -179,6 +180,12 @@ export default function usePrescriptionData() {
         updateDoc(docRef, {
             taken: taken,
             takenAt: taken ? serverTimestamp() : takenAt
+        })
+        .then(docRef => {
+            console.log("docRef has been updated", docRef);
+        })
+        .catch(error => {
+            console.log(error);
         });
     };
 
