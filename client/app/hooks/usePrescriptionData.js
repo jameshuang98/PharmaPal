@@ -121,11 +121,19 @@ export default function usePrescriptionData() {
         });
     };
 
+    // Old function to delete prescription
+    // const deletePrescription = async (id) => {
+    //     const docRef = doc(db, 'prescription', id);
+    //     deleteDoc(docRef);
+    // };
+
+    // New function to keep prescription but change status to deleted
     const deletePrescription = async (id) => {
         const docRef = doc(db, 'prescription', id);
-        deleteDoc(docRef);
+        updateDoc(docRef, {
+            status: "Deleted"
+        });
     };
-
 
     // METHODS FOR RECORD COLLECTION
 
@@ -181,12 +189,12 @@ export default function usePrescriptionData() {
             taken: taken,
             takenAt: taken ? serverTimestamp() : takenAt
         })
-        .then(docRef => {
-            console.log("docRef has been updated", docRef);
-        })
-        .catch(error => {
-            console.log(error);
-        });
+            .then(docRef => {
+                console.log("docRef has been updated", docRef);
+            })
+            .catch(error => {
+                console.log(error);
+            });
     };
 
     return { state, createPrescription, updatePrescription, deletePrescription, getRecord, createRecord, updateRecord };

@@ -8,9 +8,10 @@ import { daysOfWeek } from '../../../constants/models';
 
 const Home = () => {
   const { state } = usePrescriptionData();
+  const existingPrescriptions = state.prescriptionData.filter(p => p.status != "Deleted");
   // console.log("Home.jsx state", state);
   let timeslotData = {};
-  for (const p of state.prescriptionData) {
+  for (const p of existingPrescriptions) {
     const recurringDays = getSelectedDays(p.frequency);
     const today = new Date();
     const todayIndex = today.getDay();

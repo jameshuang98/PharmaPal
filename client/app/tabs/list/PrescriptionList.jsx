@@ -38,6 +38,7 @@ import { COLORS } from '../../../constants';
 
 const PrescriptionList = () => {
   let { state, createPrescription, updatePrescription, deletePrescription } = usePrescriptionData();
+  const existingPrescriptions = state.prescriptionData.filter(p => p.status != "Deleted");
   // console.log("prescriptionList state", state);
 
   const [selected, setSelected] = useState(null);
@@ -83,9 +84,6 @@ const PrescriptionList = () => {
     }));
   };
 
-  // console.log("prescriptionForm", prescriptionForm)
-
-
   const reset = () => {
     onDropdownOpen("", false);
     setModalVisible("")
@@ -96,7 +94,6 @@ const PrescriptionList = () => {
 
   const save = () => {
     const prescription = convertPrescriptionFormToPrescription(prescriptionForm)
-    // console.log("prescription save", prescription)
     const isPrescriptionExist = state.prescriptionData.find(p => p.id === prescriptionForm.id) ?? false;
     console.log('isPrescriptionExist', isPrescriptionExist)
     if (!isPrescriptionExist) {
@@ -169,7 +166,7 @@ const PrescriptionList = () => {
             <Text style={styles.tabTitle}>All Prescriptions</Text>
           </View>
           <FlatList
-            data={state.prescriptionData}
+            data={existingPrescriptions}
             renderItem={({ item }) => (
               <PrescriptionView
                 prescription={item}
@@ -190,8 +187,6 @@ const PrescriptionList = () => {
               accessibilityLabel="Delete prescription"
               onPress={() => {
                 setModalVisible("delete");
-                // deletePrescription(selected);
-                // reset();
               }}
             />
           </Animated.View>
