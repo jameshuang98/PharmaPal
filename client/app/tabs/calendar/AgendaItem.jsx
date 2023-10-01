@@ -8,7 +8,7 @@ import { getTimeToMinute } from '../../helpers/helpers';
 const AgendaItem = (props) => {
     const { item } = props;
     console.log('item', item)
-    const time = getTimeToMinute(item.takenAt.seconds)
+    const takenText = item.takenAt ? `Taken at ${getTimeToMinute(item.takenAt.seconds)}` : "Taken";
 
     const itemPressed = useCallback(() => {
         Alert.alert(item.title);
@@ -22,7 +22,7 @@ const AgendaItem = (props) => {
             </View>
             <View style={styles.rightSection}>
                 <View>
-                    {item.taken && <Text style={styles.itemTakenText}>Taken at {time}</Text>}
+                    {item.taken && <Text style={styles.itemTakenText}>{takenText}</Text>}
                 </View>
                 <View style={styles.itemButtonContainer}>
                     <Checkbox
