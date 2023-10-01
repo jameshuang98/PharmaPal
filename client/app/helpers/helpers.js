@@ -56,6 +56,25 @@ export function getSelectedDays(bitmask) {
   return selectedDays;
 };
 
+export function getPrescriptionDescription(dailyFrequency, frequency, dose) {
+  const recurringDays = getSelectedDays(frequency);
+  const numDays = recurringDays.length;
+
+  if (frequency === 127) {
+    return `${dose} mg - ${dailyFrequency} times every day`
+  } else if (numDays === 0) {
+    return 'No specific days selected';
+  } else if (numDays === 1) {
+    return `${dose} mg - every ${recurringDays[0]}`;
+  } else if (numDays > 3) {
+    return `${dose} mg - ${numDays} times per week`;
+  } else {
+    const lastDay = recurringDays[numDays - 1];
+    const daysExceptLast = recurringDays.slice(0, length - 1).join(', ');
+    return `${dose} mg - every ${daysExceptLast}, and ${lastDay}`;
+  }
+}
+
 export function convertPrescriptionToPrescriptionForm(prescription) {
   let prescriptionForm = { ...emptyPrescription };
   prescriptionForm.id = prescription.id;

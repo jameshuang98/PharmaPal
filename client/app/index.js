@@ -11,7 +11,6 @@ const Tab = createBottomTabNavigator();
 
 function App() {
 
-
     return (
         <NavigationContainer independent={true} screenOptions={{ headerTitle: "" }}>
             <Tab.Navigator screenOptions={{ headerShown: false }}>
