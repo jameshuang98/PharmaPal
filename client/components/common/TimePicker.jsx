@@ -19,12 +19,15 @@ const TimePicker = (props) => {
                 [property]: {}
             }))
         } else {
+            const newState = {};
+            newState[property] = { ...state[property] }
+
             for (let i = 0; i < count; i++) {
-                if (!Object.hasOwn(state[property], i)) {
-                    setState(prev => ({
-                        ...prev,
-                        [property]: { ...state[property], [i]: new Date() }
-                    }))
+                if (!state[property]?.hasOwnProperty(i)) {
+                    newState[property] = {
+                        ...newState[property],
+                        [i]: new Date()
+                    };
                 }
                 list.push(
                     <View key={i} style={styles.container}>
@@ -38,13 +41,25 @@ const TimePicker = (props) => {
                             style={styles.input}
                         />
                     </View>
-                )
+                );
             };
-        }
+            for (let i in newState[property]) {
+                if (parseInt(i) >= count) {
+                    delete newState[property][i];
+                }
+            };
+            console.log('newState after deletion', newState)
+
+            // Update the state once, outside the loop
+            if (Object.keys(newState).length > 0) {
+                setState(prev => ({
+                    ...prev,
+                    ...newState
+                }));
+            };
+        };
         setListDateTimePickers(list)
     }, [count]);
-
-    const [time, setTime] = useState(new Date());
 
     const onChange = (event, selectedTime, doseNumber) => {
         setState(prev => ({
