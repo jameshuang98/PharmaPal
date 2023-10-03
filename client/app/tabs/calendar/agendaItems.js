@@ -35,6 +35,13 @@ export function getRecordItems(records, prescriptions) {
         title,
         id,
       });
+
+      existingEntry.data.sort((a, b) => {
+        const dateA = new Date(a.takenAt * 1000);
+        const dateB = new Date(b.takenAt * 1000);
+        return dateA - dateB;
+      });
+
     } else {
       // Otherwise, create a new entry
       const newEntry = {

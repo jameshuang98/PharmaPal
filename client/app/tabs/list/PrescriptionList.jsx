@@ -177,7 +177,6 @@ const PrescriptionList = () => {
             keyExtractor={(item) => item.id}
             contentContainerStyle={{ columnGap: 16 }}
           />
-          {selected && <Text>{selected}</Text>}
 
           <Animated.View style={[{ transform: [{ translateY: animationValue2 }] }, styles.fabContainer, { zIndex: 5 }]}>
             <FAB
