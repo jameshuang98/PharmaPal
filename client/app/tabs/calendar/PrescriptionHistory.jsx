@@ -39,7 +39,9 @@ const PrescriptionHistory = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-
+      <View style={styles.titleContainer}>
+        <Text style={styles.tabTitle}>Prescription History</Text>
+      </View>
       <CalendarProvider
         date={today}
         // onDateChanged={onDateChanged}

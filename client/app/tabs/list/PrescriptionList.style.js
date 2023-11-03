@@ -8,6 +8,9 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
     width: '100%',
     marginTop: 10,
     marginBottom: 15
@@ -16,7 +19,7 @@ const styles = StyleSheet.create({
     fontSize: SIZES.large,
     color: COLORS.primary,
     fontWeight: 'bold',
-    marginTop: 2,
+    marginTop: 2
   },
   headerBtn: {
     fontSize: SIZES.medium,
