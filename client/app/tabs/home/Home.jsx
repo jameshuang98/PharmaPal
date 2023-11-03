@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "./home.style";
 import PrescriptionTimeSlot from '../../../components/home/PrescriptionTimeSlot';
 import usePrescriptionData from '../../hooks/usePrescriptionData';
-import { getSelectedDays } from '../../helpers/helpers';
+import { getSelectedDays, sortTimes } from '../../helpers/helpers';
 import { daysOfWeek } from '../../../constants/models';
 
 const Home = () => {
@@ -11,20 +11,27 @@ const Home = () => {
   const existingPrescriptions = state.prescriptionData.filter(p => p.status != "Deleted");
   // console.log("Home.jsx state", state);
   let timeslotData = {};
+  console.log('existingPrescriptions', existingPrescriptions)
+
   for (const p of existingPrescriptions) {
     const recurringDays = getSelectedDays(p.frequency);
+    console.log('recurringDays', recurringDays)
     const today = new Date();
     const todayIndex = today.getDay();
     const days = Object.keys(daysOfWeek);
-
     if (recurringDays.includes(days[todayIndex])) {
       let json = JSON.parse(p.json);
       for (const doseId in json) {
-        const t = json[doseId]
-        if (!timeslotData[t]) {
-          timeslotData[t] = []
+        const time = new Date(json[doseId] * 1000);
+        const formattedTime = time.toLocaleString('en-US', {
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+        });
+        if (!timeslotData[formattedTime]) {
+          timeslotData[formattedTime] = []
         }
-        timeslotData[t].push({
+        timeslotData[formattedTime].push({
           title: p.title,
           dose: p.dose,
           doseId: doseId,
@@ -33,8 +40,9 @@ const Home = () => {
       }
     }
   }
-  // console.log("timeslotData", timeslotData)
+  console.log("timeslotData", timeslotData)
   const timeslots = Object.keys(timeslotData);
+  timeslots.sort(sortTimes);
 
   const parsedTimeslots = timeslots.length > 0 ? timeslots.map((time, idx) =>
     <PrescriptionTimeSlot

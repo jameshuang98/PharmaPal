@@ -12,6 +12,32 @@ export function getTodayTimestamp() {
   return currentDate;
 }
 
+// A function to convert human-readable time to a sortable value
+function convertToSortableTime(time) {
+  const [hour, minute] = time.match(/\d+|\w+/g); // Extract hour and minute
+  const isPM = time.toLowerCase().includes("pm");
+
+  let sortableHour = parseInt(hour, 10);
+  if (isPM && sortableHour !== 12) {
+    sortableHour += 12;
+  }
+  if (!isPM && sortableHour === 12) {
+    sortableHour = 0;
+  }
+
+  const sortableMinute = parseInt(minute, 10) || 0;
+
+  return sortableHour * 60 + sortableMinute; // Convert to minutes since midnight
+}
+
+export function sortTimes(a, b) {
+  
+  const timeA = convertToSortableTime(a);
+  const timeB = convertToSortableTime(b);
+
+  return timeA - timeB; // Compare the sortable values
+}
+
 export function isSameDay(timestamp1, timestamp2) {
   const date1 = new Date(timestamp1 * 1000); // Convert to milliseconds
   const date2 = new Date(timestamp2 * 1000); // Convert to milliseconds
