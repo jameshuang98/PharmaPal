@@ -31,7 +31,7 @@ function convertToSortableTime(time) {
 }
 
 export function sortTimes(a, b) {
-  
+
   const timeA = convertToSortableTime(a);
   const timeB = convertToSortableTime(b);
 
@@ -87,17 +87,17 @@ export function getPrescriptionDescription(dailyFrequency, frequency, dose) {
   const numDays = recurringDays.length;
 
   if (frequency === 127) {
-    return `${dose} mg - ${dailyFrequency} times every day`
+    return dailyFrequency === 1 ? `${dose} mg - every day` : `${dose} mg - ${dailyFrequency} times every day`;
   } else if (numDays === 0) {
     return 'No specific days selected';
   } else if (numDays === 1) {
-    return `${dose} mg - every ${recurringDays[0]}`;
+    return `${dose} mg - every ${recurringDays[0]} `;
   } else if (numDays > 3) {
     return `${dose} mg - ${numDays} times per week`;
   } else {
     const lastDay = recurringDays[numDays - 1];
     const daysExceptLast = recurringDays.slice(0, length - 1).join(', ');
-    return `${dose} mg - every ${daysExceptLast}, and ${lastDay}`;
+    return `${dose} mg - every ${daysExceptLast}, and ${lastDay} `;
   }
 }
 
